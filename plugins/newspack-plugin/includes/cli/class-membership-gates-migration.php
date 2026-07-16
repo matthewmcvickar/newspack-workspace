@@ -889,9 +889,11 @@ class Membership_Gates_Migration {
 	 * A variation ID is resolved to its parent product — gates reference parent
 	 * products, and a subscription to any variation matches the parent at enforcement.
 	 * This keeps plans that list only variation IDs (no parent) from producing an empty
-	 * paid list. A variation with no resolvable parent is dropped; any other ID (a
-	 * parent product, or one that cannot be loaded) is kept as-is. WooCommerce product
-	 * IDs are integers, so the list is cast to int and de-duplicated.
+	 * paid list. Both plain product variations and variable-subscription variations
+	 * (WooCommerce Subscriptions types the latter `subscription_variation`) are resolved.
+	 * A variation with no resolvable parent is dropped; any other ID (a parent product,
+	 * or one that cannot be loaded) is kept as-is. WooCommerce product IDs are integers,
+	 * so the list is cast to int and de-duplicated.
 	 *
 	 * @param array[] $group List of plan descriptors sharing a gate.
 	 *
@@ -899,16 +901,17 @@ class Membership_Gates_Migration {
 	 */
 	private static function group_product_ids( array $group ): array {
 		$resolved = [];
-		foreach ( array_merge( [], ...array_column( $group, 'product_ids' ) ) as $product_id ) {
-			$product_id = (int) $product_id;
-			$product    = \wc_get_product( $product_id );
-			if ( $product && $product->is_type( 'variation' ) ) {
-				// A variation gates access through its parent; an orphan variation
-				// (parent gone) resolves to 0 and is dropped below.
-				$product_id = (int) $product->get_parent_id();
+		foreach ( array_merge( [], ...array_column( $group, 'product_ids' ) ) as $raw_id ) {
+			$product     = \wc_get_product( (int) $raw_id );
+			$resolved_id = (int) $raw_id;
+			if ( $product && $product->is_type( [ 'variation', 'subscription_variation' ] ) ) {
+				// A variation — including a variable-subscription child — gates access
+				// through its parent, so map it to the parent product. An orphan variation
+				// with no parent resolves to 0 and is dropped below.
+				$resolved_id = (int) $product->get_parent_id();
 			}
-			if ( $product_id ) {
-				$resolved[] = $product_id;
+			if ( $resolved_id ) {
+				$resolved[] = $resolved_id;
 			}
 		}
 		return array_values( array_unique( $resolved ) );

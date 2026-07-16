@@ -40,6 +40,25 @@ require_once dirname( __DIR__, 2 ) . '/mocks/wc-mocks.php';
 class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 
 	/**
+	 * Reset the mock WooCommerce product store so each test is isolated (the store is
+	 * a plain global that WP_UnitTestCase transactions do not roll back).
+	 */
+	public function set_up() {
+		parent::set_up();
+		global $products_database;
+		$products_database = [];
+	}
+
+	/**
+	 * Clear the mock product store so registered products never leak into later tests.
+	 */
+	public function tear_down() {
+		global $products_database;
+		$products_database = [];
+		parent::tear_down();
+	}
+
+	/**
 	 * Invoke a private static method on the CLI class via reflection.
 	 *
 	 * @param string $method_name The method name.
@@ -671,9 +690,7 @@ class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 	 * silently denied subscribers.
 	 */
 	public function test_group_product_ids_maps_variation_only_list_to_parents() {
-		global $products_database;
-		$products_database = [];
-		$this->register_mock_product( 5001, 'variable-subscription' );
+		$this->register_mock_product( 5001, 'variable' );
 		$this->register_mock_product( 5011, 'variation', 5001 );
 		$this->register_mock_product( 5012, 'variation', 5001 );
 
@@ -689,14 +706,33 @@ class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * WooCommerce Subscriptions types variable-subscription children `subscription_variation`
+	 * (not plain `variation`) — the dominant real-world shape for membership products.
+	 * Those must resolve to their parent subscription product too.
+	 */
+	public function test_group_product_ids_maps_subscription_variation_to_parent() {
+		$this->register_mock_product( 8001, 'variable-subscription' );
+		$this->register_mock_product( 8011, 'subscription_variation', 8001 );
+		$this->register_mock_product( 8012, 'subscription_variation', 8001 );
+
+		$group = [
+			[ 'product_ids' => [ 8011, 8012 ] ],
+		];
+
+		$this->assertSame(
+			[ 8001 ],
+			$this->invoke_private_static( 'group_product_ids', [ $group ] ),
+			'subscription_variation children resolve to the parent subscription product.'
+		);
+	}
+
+	/**
 	 * A parent already listed alongside its variations is not double-counted: the
 	 * variations resolve to the same parent and de-dupe.
 	 */
 	public function test_group_product_ids_dedupes_parent_and_its_variations() {
-		global $products_database;
-		$products_database = [];
 		$this->register_mock_product( 6001, 'variable-subscription' );
-		$this->register_mock_product( 6011, 'variation', 6001 );
+		$this->register_mock_product( 6011, 'subscription_variation', 6001 );
 
 		$group = [
 			[ 'product_ids' => [ 6001, 6011 ] ],
@@ -714,10 +750,8 @@ class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 	 * grant access, so it is dropped rather than carried into the paid list.
 	 */
 	public function test_group_product_ids_drops_orphan_variation() {
-		global $products_database;
-		$products_database = [];
 		$this->register_mock_product( 7001, 'simple' );
-		$this->register_mock_product( 7011, 'variation', 0 );
+		$this->register_mock_product( 7011, 'subscription_variation', 0 );
 
 		$group = [
 			[ 'product_ids' => [ 7001, 7011 ] ],
