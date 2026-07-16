@@ -624,18 +624,19 @@ class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * The product-ID union across a group's plan descriptors is de-duplicated, so a
-	 * consolidated gate's paid-access list carries each merged plan's products once.
+	 * The product-ID union across a group's plan descriptors is de-duplicated and
+	 * returned as ints (WooCommerce product IDs), so a consolidated gate's paid-access
+	 * list carries each merged plan's products once.
 	 */
 	public function test_group_product_ids_unions_and_dedupes_descriptor_products() {
 		$group = [
-			[ 'product_ids' => [ '103' ] ],
-			[ 'product_ids' => [ '101', '102' ] ],
-			[ 'product_ids' => [ '102' ] ],
+			[ 'product_ids' => [ 103 ] ],
+			[ 'product_ids' => [ 101, 102 ] ],
+			[ 'product_ids' => [ 102 ] ],
 		];
 
 		$this->assertSame(
-			[ '103', '101', '102' ],
+			[ 103, 101, 102 ],
 			$this->invoke_private_static( 'group_product_ids', [ $group ] )
 		);
 	}

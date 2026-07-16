@@ -894,7 +894,10 @@ class Membership_Gates_Migration {
 	 * @return int[] De-duplicated parent product IDs.
 	 */
 	private static function group_product_ids( array $group ): array {
-		$product_ids = array_values( array_unique( array_merge( [], ...array_column( $group, 'product_ids' ) ) ) );
+		// Cast to int (WooCommerce product IDs are integers) so the list matches the
+		// documented contract and gate access rules never carry string IDs.
+		$product_ids = array_map( 'intval', array_merge( [], ...array_column( $group, 'product_ids' ) ) );
+		$product_ids = array_values( array_unique( $product_ids ) );
 		return array_values(
 			array_filter(
 				$product_ids,
