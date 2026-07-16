@@ -29,6 +29,10 @@ namespace Newspack\Tests\Content_Gate;
 use Newspack\CLI\Membership_Gates_Migration;
 
 require_once dirname( __DIR__, 3 ) . '/includes/cli/class-membership-gates-migration.php';
+// group_product_ids() resolves product IDs via wc_get_product(); the harness has no
+// WooCommerce, so load the WC mock layer (wc_get_product / WC_Product::is_type /
+// get_parent_id / wc_create_mock_product).
+require_once dirname( __DIR__, 2 ) . '/mocks/wc-mocks.php';
 
 /**
  * Characterization tests for the migrate-membership-gates helpers.
@@ -638,6 +642,91 @@ class Test_Membership_Gates_Migration extends \WP_UnitTestCase {
 		$this->assertSame(
 			[ 103, 101, 102 ],
 			$this->invoke_private_static( 'group_product_ids', [ $group ] )
+		);
+	}
+
+	/**
+	 * Register a mock WooCommerce product/variation in the mock product store.
+	 *
+	 * @param int    $product_id The product ID.
+	 * @param string $type       The product type ('simple', 'variation', …).
+	 * @param int    $parent_id  The parent product ID (for variations).
+	 *
+	 * @return void
+	 */
+	private function register_mock_product( int $product_id, string $type = 'simple', int $parent_id = 0 ): void {
+		\wc_create_mock_product(
+			[
+				'id'        => $product_id,
+				'type'      => $type,
+				'parent_id' => $parent_id,
+			]
+		);
+	}
+
+	/**
+	 * NPPD-2064: a plan that lists only variation IDs (no parent) must still yield the
+	 * parent membership product in the gate's paid list — variations resolve to their
+	 * parent, de-duplicated. Without this, such plans migrated to an empty paid list and
+	 * silently denied subscribers.
+	 */
+	public function test_group_product_ids_maps_variation_only_list_to_parents() {
+		global $products_database;
+		$products_database = [];
+		$this->register_mock_product( 5001, 'variable-subscription' );
+		$this->register_mock_product( 5011, 'variation', 5001 );
+		$this->register_mock_product( 5012, 'variation', 5001 );
+
+		$group = [
+			[ 'product_ids' => [ 5011, 5012 ] ],
+		];
+
+		$this->assertSame(
+			[ 5001 ],
+			$this->invoke_private_static( 'group_product_ids', [ $group ] ),
+			'Two variations of one parent collapse to the single parent product.'
+		);
+	}
+
+	/**
+	 * A parent already listed alongside its variations is not double-counted: the
+	 * variations resolve to the same parent and de-dupe.
+	 */
+	public function test_group_product_ids_dedupes_parent_and_its_variations() {
+		global $products_database;
+		$products_database = [];
+		$this->register_mock_product( 6001, 'variable-subscription' );
+		$this->register_mock_product( 6011, 'variation', 6001 );
+
+		$group = [
+			[ 'product_ids' => [ 6001, 6011 ] ],
+		];
+
+		$this->assertSame(
+			[ 6001 ],
+			$this->invoke_private_static( 'group_product_ids', [ $group ] ),
+			'The parent and its variation resolve to one parent ID.'
+		);
+	}
+
+	/**
+	 * A variation with no resolvable parent (an orphan whose product is gone) cannot
+	 * grant access, so it is dropped rather than carried into the paid list.
+	 */
+	public function test_group_product_ids_drops_orphan_variation() {
+		global $products_database;
+		$products_database = [];
+		$this->register_mock_product( 7001, 'simple' );
+		$this->register_mock_product( 7011, 'variation', 0 );
+
+		$group = [
+			[ 'product_ids' => [ 7001, 7011 ] ],
+		];
+
+		$this->assertSame(
+			[ 7001 ],
+			$this->invoke_private_static( 'group_product_ids', [ $group ] ),
+			'The orphan variation is dropped; the simple product is kept.'
 		);
 	}
 

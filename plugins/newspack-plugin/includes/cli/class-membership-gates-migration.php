@@ -886,24 +886,32 @@ class Membership_Gates_Migration {
 	/**
 	 * Union of a group's parent product IDs (across all its plan descriptors).
 	 *
-	 * Product variations are dropped so the list matches what the gate carries —
-	 * gates reference parent products only.
+	 * A variation ID is resolved to its parent product — gates reference parent
+	 * products, and a subscription to any variation matches the parent at enforcement.
+	 * This keeps plans that list only variation IDs (no parent) from producing an empty
+	 * paid list. A variation with no resolvable parent is dropped; any other ID (a
+	 * parent product, or one that cannot be loaded) is kept as-is. WooCommerce product
+	 * IDs are integers, so the list is cast to int and de-duplicated.
 	 *
 	 * @param array[] $group List of plan descriptors sharing a gate.
 	 *
 	 * @return int[] De-duplicated parent product IDs.
 	 */
 	private static function group_product_ids( array $group ): array {
-		// Cast to int (WooCommerce product IDs are integers) so the list matches the
-		// documented contract and gate access rules never carry string IDs.
-		$product_ids = array_map( 'intval', array_merge( [], ...array_column( $group, 'product_ids' ) ) );
-		$product_ids = array_values( array_unique( $product_ids ) );
-		return array_values(
-			array_filter(
-				$product_ids,
-				fn( $id ) => 'product_variation' !== \get_post_type( $id )
-			)
-		);
+		$resolved = [];
+		foreach ( array_merge( [], ...array_column( $group, 'product_ids' ) ) as $product_id ) {
+			$product_id = (int) $product_id;
+			$product    = \wc_get_product( $product_id );
+			if ( $product && $product->is_type( 'variation' ) ) {
+				// A variation gates access through its parent; an orphan variation
+				// (parent gone) resolves to 0 and is dropped below.
+				$product_id = (int) $product->get_parent_id();
+			}
+			if ( $product_id ) {
+				$resolved[] = $product_id;
+			}
+		}
+		return array_values( array_unique( $resolved ) );
 	}
 
 	/**
