@@ -19,6 +19,7 @@ import {
 	getMissingOptionLabel,
 	isAccessRuleOptionInput,
 	resolveAccessRuleOptionTokens,
+	MAX_OPTION_SUGGESTIONS,
 	type AccessRuleOption as RuleOption,
 } from '../../../../../content-gate/access-rule-options';
 
@@ -33,10 +34,17 @@ function dynamicRule< T >( config: DynamicRuleConfig< T > ): DynamicRuleConfig< 
 
 /**
  * Rules whose options should be fetched dynamically via the REST API.
+ *
+ * `per_page=-1` is apiFetch's unbounded form — fetchAllMiddleware walks the `Link:
+ * rel="next"` headers and resolves to every page merged. A fixed page size silently
+ * truncated the list, leaving the institutions past it unselectable. The value is
+ * apiFetch's, not the REST API's: the posts controller caps `per_page` at 100 and would
+ * reject -1 outright, so this only works through apiFetch. `orderby`/`status` match
+ * `Institution::get_options()`, which seeds these options before the fetch lands.
  */
 const DYNAMIC_OPTION_RULES: Record< string, DynamicRuleConfig< any > > = {
 	institution: dynamicRule< Institution >( {
-		path: '/wp/v2/np_institution?per_page=100&context=edit',
+		path: '/wp/v2/np_institution?per_page=-1&context=edit&status=publish&orderby=title&order=asc&_fields=id,title',
 		mapItem: item => ( { value: item.id, label: item.title.raw } ),
 	} ),
 };
@@ -94,6 +102,7 @@ export default function AccessRuleControl( { slug, value, onChange }: GateRuleCo
 				value={ getAccessRuleOptionTokens( options, value, getMissingOptionLabel( slug ) ) }
 				onChange={ ( tokens: ( string | TokenItem )[] ) => onChange( resolveAccessRuleOptionTokens( tokens, options, value ) ) }
 				suggestions={ options.map( formatAccessRuleOptionLabel ) }
+				maxSuggestions={ MAX_OPTION_SUGGESTIONS }
 				__experimentalValidateInput={ ( input: string ) => isAccessRuleOptionInput( input, options ) }
 				__experimentalExpandOnFocus
 				__next40pxDefaultSize

@@ -30,6 +30,7 @@ import {
 	getMissingOptionLabel,
 	isAccessRuleOptionInput,
 	resolveAccessRuleOptionTokens,
+	MAX_OPTION_SUGGESTIONS,
 } from '../access-rule-options';
 
 /**
@@ -137,6 +138,7 @@ const GateControls = ( { gateIds, onChange }: { gateIds: number[]; onChange: ( i
 				label={ __( 'Gates', 'newspack-plugin' ) }
 				value={ getAccessRuleOptionTokens( gateOptions, gateIds, getMissingOptionLabel( 'gate' ) ) }
 				suggestions={ gateOptions.map( formatAccessRuleOptionLabel ) }
+				maxSuggestions={ MAX_OPTION_SUGGESTIONS }
 				onChange={ ( tokens: ( string | TokenItem )[] ) =>
 					onChange( resolveAccessRuleOptionTokens( tokens, gateOptions, gateIds ).map( Number ) )
 				}
@@ -151,10 +153,17 @@ const GateControls = ( { gateIds, onChange }: { gateIds: number[]; onChange: ( i
 
 /**
  * Rules whose options must be fetched dynamically.
+ *
+ * `per_page=-1` is apiFetch's unbounded form — fetchAllMiddleware walks the `Link:
+ * rel="next"` headers and resolves to every page merged. A fixed page size silently
+ * truncated the list, leaving the institutions past it unselectable. The value is
+ * apiFetch's, not the REST API's: the posts controller caps `per_page` at 100 and would
+ * reject -1 outright, so this only works through apiFetch. `orderby`/`status` match
+ * `Institution::get_options()`, which seeds these options before the fetch lands.
  */
 const DYNAMIC_OPTION_RULES: Record< string, { path: string; mapItem: ( item: DynamicOptionItem ) => AccessRuleOption } > = {
 	institution: {
-		path: '/wp/v2/np_institution?per_page=100&context=edit',
+		path: '/wp/v2/np_institution?per_page=-1&context=edit&status=publish&orderby=title&order=asc&_fields=id,title',
 		mapItem: ( item: DynamicOptionItem ) => ( { value: item.id, label: item.title.raw } ),
 	},
 };
@@ -202,6 +211,7 @@ const AccessRuleValueControl = ( {
 				label={ config.name }
 				value={ getAccessRuleOptionTokens( options, value, getMissingOptionLabel( slug ) ) }
 				suggestions={ options.map( formatAccessRuleOptionLabel ) }
+				maxSuggestions={ MAX_OPTION_SUGGESTIONS }
 				onChange={ ( tokens: ( string | TokenItem )[] ) => onChange( resolveAccessRuleOptionTokens( tokens, options, value ) ) }
 				__experimentalValidateInput={ ( input: string ) => isAccessRuleOptionInput( input, options ) }
 				__experimentalExpandOnFocus
