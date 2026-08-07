@@ -12,7 +12,6 @@ import { useState } from '@wordpress/element';
  * Internal dependencies
  */
 import Router from '../proxied-imports/router';
-import './style.scss';
 
 const { useHistory } = Router;
 
