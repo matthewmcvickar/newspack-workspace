@@ -164,7 +164,7 @@ export default function PricingRulesList() {
 				id: 'status',
 				label: __( 'Status', 'newspack-plugin' ),
 				getValue: ( { item } ) => item.status,
-				render: ( { item } ) => <Badge intent={ item.status === 'publish' ? 'stable' : 'none' }>{ item.status_label }</Badge>,
+				render: ( { item } ) => <Badge intent={ item.status === 'publish' ? 'stable' : 'draft' }>{ item.status_label }</Badge>,
 				elements: statusElements,
 				filterBy: { operators: [ 'is' ] },
 			},

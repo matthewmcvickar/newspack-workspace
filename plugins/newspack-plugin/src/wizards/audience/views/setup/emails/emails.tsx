@@ -306,7 +306,7 @@ const Emails = () => {
 				render: ( { item }: { item: EmailItem } ) => {
 					const isEnabled = item.status === 'publish';
 					return (
-						<Badge intent={ isEnabled ? 'stable' : 'none' }>
+						<Badge intent={ isEnabled ? 'stable' : 'draft' }>
 							{ isEnabled ? __( 'Enabled', 'newspack-plugin' ) : __( 'Disabled', 'newspack-plugin' ) }
 						</Badge>
 					);
