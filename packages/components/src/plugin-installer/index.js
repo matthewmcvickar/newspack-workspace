@@ -227,8 +227,7 @@ class PluginInstaller extends Component {
 								</span>
 							);
 						} else if ( Status === 'active' ) {
-							// The only branch that isn't an action: the card has no onClick
-							// here, so this reads as state rather than something to press.
+							// Installed is a state, not an action, so the slot takes a badge.
 							actionText = <Badge intent="stable">{ __( 'Installed', 'newspack-plugin' ) }</Badge>;
 						}
 

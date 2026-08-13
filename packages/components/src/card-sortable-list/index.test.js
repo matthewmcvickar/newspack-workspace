@@ -23,8 +23,7 @@ describe( 'CardSortableList', () => {
 	it( 'renders no badge for an item without badge text', () => {
 		const { container } = render( <CardSortableList items={ [ { id: 1, title: 'Homepage' } ] } /> );
 		expect( screen.getByText( 'Homepage' ) ).toBeInTheDocument();
-		// An unguarded Badge would still emit its span, so assert on the heading's
-		// element children rather than on visible text.
+		// An unguarded Badge would still emit an empty span, so assert on element children.
 		expect( container.querySelector( 'h3' ).children ).toHaveLength( 0 );
 	} );
 } );

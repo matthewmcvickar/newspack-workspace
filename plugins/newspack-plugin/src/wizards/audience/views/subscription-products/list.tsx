@@ -262,8 +262,7 @@ export default function SubscriptionProductsList( { scope = 'subscriptions' }: {
 				label: __( 'Availability', 'newspack-plugin' ),
 				getValue: ( { item } ) => item.availability,
 				render: ( { item } ) => {
-					// Availability is a configuration fact, not a problem to fix, so Private
-					// stays informational rather than inheriting a warning colour.
+					// Availability is a configuration fact, not a problem, so Private is not a warning.
 					const intents = { free: 'informational', private: 'informational', public: 'none' } as const;
 					return <Badge intent={ intents[ item.availability ] }>{ item.availability_label }</Badge>;
 				},

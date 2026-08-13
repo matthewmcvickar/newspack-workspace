@@ -17,8 +17,7 @@ export const STATUS_LABELS = {
 /** @type {Record< string, import('../../../packages/components/src/types').BadgeIntent >} */
 export const STATUS_BADGE_INTENT = {
 	active: 'stable',
-	// "Pending" is queued rather than notable-but-idle, which is what separates
-	// `low` from `informational` in the badge intent scale.
+	// "Pending" is queued work rather than an idle state, hence low, not informational.
 	pending: 'low',
 	'on-hold': 'medium',
 	cancelled: 'high',
