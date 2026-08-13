@@ -23,10 +23,10 @@ import { Badge } from '@wordpress/ui';
  * Internal dependencies
  */
 import Card from '../card';
+import type { BadgeIntent } from '../types';
 import './style.scss';
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
-type BadgeIntent = NonNullable< React.ComponentProps< typeof Badge >[ 'intent' ] >;
 
 type CardFormProps = {
 	title: string;

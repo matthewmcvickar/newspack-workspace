@@ -17,9 +17,8 @@ import { Badge, Card, Stack } from '@wordpress/ui';
  * Internal dependencies
  */
 import Button from '../button';
+import type { BadgeIntent } from '../types';
 import './style.scss';
-
-type BadgeIntent = NonNullable< React.ComponentProps< typeof Badge >[ 'intent' ] >;
 
 type CardFeatureIcon = {
 	/** The icon node to render (e.g. a WordPress <Icon> component). */
