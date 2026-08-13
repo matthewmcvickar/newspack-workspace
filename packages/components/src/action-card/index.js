@@ -167,7 +167,7 @@ const ActionCard = ( {
 								) }
 								{ ! titleLink && ! expandable && title }
 							</span>
-							{ badges?.length &&
+							{ badges?.length > 0 &&
 								badges.map( ( badgeText, i ) => (
 									<Badge key={ `badge-${ i }` } intent={ badgeIntent ?? 'none' }>
 										{ badgeText }
