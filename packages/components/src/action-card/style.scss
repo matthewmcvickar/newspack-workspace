@@ -196,11 +196,7 @@
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
-		margin-right: -8px;
-
-		.newspack-action-card__title {
-			margin-right: 8px;
-		}
+		gap: 8px;
 
 		a {
 			color: inherit;
@@ -370,16 +366,6 @@
 	/* Icon */
 	.newspack_plugin-installer__icon {
 		margin: 0;
-	}
-
-	/* Badge */
-	.newspack-action-card__badge {
-		flex: 0 0 auto;
-		margin: 0 8px 0 0;
-
-		+ .newspack-action-card__badge {
-			margin-left: -4px;
-		}
 	}
 
 	/* Description Card */

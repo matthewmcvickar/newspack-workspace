@@ -169,7 +169,7 @@ const ActionCard = ( {
 							</span>
 							{ badges?.length &&
 								badges.map( ( badgeText, i ) => (
-									<Badge key={ `badge-${ i }` } className="newspack-action-card__badge" intent={ badgeIntent ?? 'none' }>
+									<Badge key={ `badge-${ i }` } intent={ badgeIntent ?? 'none' }>
 										{ badgeText }
 									</Badge>
 								) ) }
