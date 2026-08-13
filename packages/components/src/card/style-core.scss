@@ -78,9 +78,11 @@
 	&__header {
 		color: wp-colors.$gray-700;
 		flex-wrap: wrap;
-		padding-bottom: wp-vars.$grid-unit-10;
-		padding-top: wp-vars.$grid-unit-10;
 		position: relative;
+		&.newspack-card--core__header {
+			padding-bottom: wp-vars.$grid-unit-10;
+			padding-top: wp-vars.$grid-unit-10;
+		}
 		.newspack-card--core__action {
 			margin: 0;
 			label {
