@@ -13,6 +13,7 @@ import { Badge } from '@wordpress/ui';
  * Internal dependencies
  */
 import { Card } from '../';
+import type { BadgeIntent } from '../types';
 import './style.scss';
 
 /**
@@ -35,7 +36,7 @@ type DraggableItem = {
 	id: string | number;
 	title: string;
 	description?: React.ReactNode;
-	badgeIntent: NonNullable< React.ComponentProps< typeof Badge >[ 'intent' ] >;
+	badgeIntent: BadgeIntent;
 	badgeText: string;
 	toggleChecked?: boolean;
 	onToggleChange?: () => void;
@@ -403,7 +404,7 @@ const CardSortableList = ( {
 												<>
 													<h3>
 														{ item.title }
-														<Badge intent={ item.badgeIntent }>{ item.badgeText }</Badge>
+														{ item.badgeText && <Badge intent={ item.badgeIntent }>{ item.badgeText }</Badge> }
 													</h3>
 													{ item.description && <p>{ item.description }</p> }
 												</>
