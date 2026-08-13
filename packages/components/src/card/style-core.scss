@@ -45,7 +45,13 @@
 		}
 		.newspack-card--core {
 			&__header-content {
-				* {
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6,
+				p {
 					line-height: wp-vars.$font-line-height-small;
 				}
 			}
@@ -72,6 +78,8 @@
 	&__header {
 		color: wp-colors.$gray-700;
 		flex-wrap: wrap;
+		padding-bottom: wp-vars.$grid-unit-10;
+		padding-top: wp-vars.$grid-unit-10;
 		position: relative;
 		.newspack-card--core__action {
 			margin: 0;
@@ -165,9 +173,11 @@
 		}
 	}
 	&__header-content {
+		align-content: center;
 		display: grid;
 		flex: 1;
 		grid-gap: 8px;
+		min-height: wp-vars.$grid-unit-40;
 		h1,
 		h2,
 		h3,
