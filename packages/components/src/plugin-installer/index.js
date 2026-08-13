@@ -8,7 +8,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Icon, check } from '@wordpress/icons';
+import { Badge } from '@wordpress/ui';
 
 /**
  * Internal dependencies.
@@ -227,14 +227,9 @@ class PluginInstaller extends Component {
 								</span>
 							);
 						} else if ( Status === 'active' ) {
-							actionText = (
-								<span className="newspack-plugin-installer__status">
-									{ __( 'Installed', 'newspack-plugin' ) }
-									<span className="newspack-checkbox-icon newspack-checkbox-icon--checked">
-										<Icon icon={ check } />
-									</span>
-								</span>
-							);
+							// The only branch that isn't an action: the card has no onClick
+							// here, so this reads as state rather than something to press.
+							actionText = <Badge intent="stable">{ __( 'Installed', 'newspack-plugin' ) }</Badge>;
 						}
 
 						const classes = classnames( 'newspack-action-card__plugin-installer', this.classForInstallationStatus( installationStatus ) );
