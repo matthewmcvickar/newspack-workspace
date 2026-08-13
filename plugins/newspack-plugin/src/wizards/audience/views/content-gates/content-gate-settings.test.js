@@ -58,7 +58,6 @@ jest.mock( '@wordpress/components', () => {
 jest.mock( '../../../../../packages/components/src', () => {
 	const React = require( 'react' );
 	return {
-		Badge: ( { text } ) => React.createElement( 'span', null, text ),
 		Grid: ( { children } ) => React.createElement( 'div', null, children ),
 		Card: ( { children, __experimentalCoreProps } ) =>
 			React.createElement(
