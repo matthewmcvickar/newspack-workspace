@@ -61,6 +61,8 @@ export const getGateStatus = ( status: GateStatus ) => {
 	return status === 'publish' ? __( 'Active', 'newspack-plugin' ) : __( 'Inactive', 'newspack-plugin' );
 };
 
+// An inactive gate is an unpublished draft post, not a settled "off" state,
+// which is what separates `draft` from `none` here.
 export const getGateStatusBadgeIntent = ( status: GateStatus ) => {
-	return status === 'publish' ? 'stable' : 'none';
+	return status === 'publish' ? 'stable' : 'draft';
 };
