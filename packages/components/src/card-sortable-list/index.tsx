@@ -36,8 +36,8 @@ type DraggableItem = {
 	id: string | number;
 	title: string;
 	description?: React.ReactNode;
-	badgeIntent: BadgeIntent;
-	badgeText: string;
+	badgeIntent?: BadgeIntent;
+	badgeText?: string;
 	toggleChecked?: boolean;
 	onToggleChange?: () => void;
 	actions?: DraggableItemAction[];
