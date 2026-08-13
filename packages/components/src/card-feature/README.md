@@ -138,7 +138,7 @@ import { __ } from '@wordpress/i18n';
 
 ## With a custom badge
 
-Override `badgeText` and `badgeLevel` to change the badge shown when the feature is enabled. Available levels: `default`, `info`, `success`, `warning`, `error`.
+Override `badgeText` and `badgeIntent` to change the badge shown when the feature is enabled. Available intents: `high`, `medium`, `low`, `stable`, `informational`, `draft`, `none`.
 
 ```tsx
 import { __ } from '@wordpress/i18n';
@@ -148,7 +148,7 @@ import { __ } from '@wordpress/i18n';
 	description={ __( 'Accept payments via Stripe.', 'newspack-plugin' ) }
 	enabled={ isEnabled }
 	badgeText={ __( 'Live mode', 'newspack-plugin' ) }
-	badgeLevel="info"
+	badgeIntent="informational"
 	onEnable={ handleEnable }
 	onConfigure={ () => history.push( '/settings/stripe' ) }
 	moreControls={ [ { title: __( 'Disable', 'newspack-plugin' ), onClick: handleDisable } ] }
@@ -193,7 +193,7 @@ import { __ } from '@wordpress/i18n';
 | `onConfigure` | `() => void` | — | Called when the primary button is clicked while it reads "Configure", which is the enabled state with no unmet requirements |
 | `moreControls` | `MoreControl[]` | — | Items for the "More" dropdown. Shown when `enabled` and either there are no `requirements` or `requirementsActionable` is set |
 | `badgeText` | `string` | `"Enabled"` | Badge text shown when enabled. Ignored while `requirements` is set, which takes the badge |
-| `badgeLevel` | `BadgeLevel` | `"success"` | Badge level shown when enabled. Ignored while `requirements` is set, which forces an error badge |
+| `badgeIntent` | `BadgeIntent` | `"stable"` | Badge intent shown when enabled. Ignored while `requirements` is set, which forces an error badge |
 | `busy` | `boolean` | `false` | Shows the primary button as busy and blocks it while an action is in flight |
 | `className` | `string` | — | Additional class name applied to the card element |
 
