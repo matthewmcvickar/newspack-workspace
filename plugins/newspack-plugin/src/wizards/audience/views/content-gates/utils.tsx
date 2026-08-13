@@ -61,6 +61,6 @@ export const getGateStatus = ( status: GateStatus ) => {
 	return status === 'publish' ? __( 'Active', 'newspack-plugin' ) : __( 'Inactive', 'newspack-plugin' );
 };
 
-export const getGateStatusBadgeLevel = ( status: GateStatus ) => {
-	return status === 'publish' ? 'success' : 'default';
+export const getGateStatusBadgeIntent = ( status: GateStatus ) => {
+	return status === 'publish' ? 'stable' : 'none';
 };

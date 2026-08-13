@@ -69,8 +69,8 @@
 	&__policy-chip {
 		text-decoration: none;
 
-		&:hover .newspack-badge,
-		&:focus-visible .newspack-badge {
+		&:hover .newspack-subscription-products__policy-chip-badge,
+		&:focus-visible .newspack-subscription-products__policy-chip-badge {
 			text-decoration: underline;
 		}
 	}

@@ -1093,7 +1093,7 @@ class ComponentsDemo extends Component {
 									description={ __( 'Accept payments via Stripe.', 'newspack-plugin' ) }
 									enabled={ true }
 									badgeText={ __( 'Live mode', 'newspack-plugin' ) }
-									badgeLevel="info"
+									badgeIntent="informational"
 									onEnable={ () => {} }
 									onConfigure={ () => {} }
 									moreControls={ [ { title: __( 'Disable', 'newspack-plugin' ), onClick: () => {} } ] }
@@ -1129,7 +1129,7 @@ class ComponentsDemo extends Component {
 								<CardForm
 									title={ __( 'Above Header', 'newspack-plugin' ) }
 									description={ __( 'Displays an ad above the site header.', 'newspack-plugin' ) }
-									badge={ this.state.cardFormEnabled ? { level: 'success', text: __( 'Enabled', 'newspack-plugin' ) } : undefined }
+									badge={ this.state.cardFormEnabled ? { intent: 'stable', text: __( 'Enabled', 'newspack-plugin' ) } : undefined }
 									actions={
 										this.state.cardFormEnabled ? (
 											<Button
@@ -1174,14 +1174,14 @@ class ComponentsDemo extends Component {
 									isOpen={ false }
 								/>
 							</VStack>
-							<h3>{ __( 'Badge levels', 'newspack-plugin' ) }</h3>
+							<h3>{ __( 'Badge intents', 'newspack-plugin' ) }</h3>
 							<VStack spacing={ 2 }>
-								{ [ 'success', 'info', 'warning', 'error' ].map( level => (
+								{ [ 'high', 'medium', 'low', 'stable', 'informational', 'draft', 'none' ].map( intent => (
 									<CardForm
-										key={ level }
+										key={ intent }
 										title={ __( 'Example placement', 'newspack-plugin' ) }
-										description={ __( 'Badge level: ', 'newspack-plugin' ) + level }
-										badge={ { level, text: level.charAt( 0 ).toUpperCase() + level.slice( 1 ) } }
+										description={ __( 'Badge intent: ', 'newspack-plugin' ) + intent }
+										badge={ { intent, text: intent.charAt( 0 ).toUpperCase() + intent.slice( 1 ) } }
 										actions={
 											<Button variant="tertiary" size="compact">
 												{ __( 'Edit', 'newspack-plugin' ) }

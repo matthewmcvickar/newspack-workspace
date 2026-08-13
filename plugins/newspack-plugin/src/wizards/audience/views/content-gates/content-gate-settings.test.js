@@ -87,7 +87,7 @@ jest.mock( './edit/content-rule-control', () => ( { __esModule: true, default: (
 jest.mock( './utils', () => ( {
 	getEditGateLayoutUrl: () => '#',
 	getGateStatus: () => 'Active',
-	getGateStatusBadgeLevel: () => 'success',
+	getGateStatusBadgeIntent: () => 'stable',
 } ) );
 
 describe( 'ContentGateSettings per-gate actions', () => {

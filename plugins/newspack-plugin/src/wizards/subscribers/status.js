@@ -14,11 +14,13 @@ export const STATUS_LABELS = {
 	cancelled: __( 'Cancelled', 'newspack-plugin' ),
 };
 
-export const STATUS_BADGE_LEVEL = {
-	active: 'success',
-	pending: 'info',
-	'on-hold': 'warning',
-	cancelled: 'error',
+export const STATUS_BADGE_INTENT = {
+	active: 'stable',
+	// "Pending" is queued rather than notable-but-idle, which is what separates
+	// `low` from `informational` in the badge intent scale.
+	pending: 'low',
+	'on-hold': 'medium',
+	cancelled: 'high',
 };
 
 // Active first, then pending, then on-hold, then cancelled.
