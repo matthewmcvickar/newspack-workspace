@@ -11,14 +11,15 @@ import { createElement, isValidElement } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 import { DropdownMenu } from '@wordpress/components';
 import { moreVertical } from '@wordpress/icons';
-import { Card, Stack } from '@wordpress/ui';
+import { Badge, Card, Stack } from '@wordpress/ui';
 
 /**
  * Internal dependencies
  */
-import Badge, { type BadgeLevel } from '../badge';
 import Button from '../button';
 import './style.scss';
+
+type BadgeIntent = NonNullable< React.ComponentProps< typeof Badge >[ 'intent' ] >;
 
 type CardFeatureIcon = {
 	/** The icon node to render (e.g. a WordPress <Icon> component). */
@@ -85,8 +86,8 @@ type CardFeatureProps = {
 	moreControls?: MoreControl[];
 	/** Badge text shown when enabled. Ignored while `requirements` is set, which takes the badge. Default: "Enabled". */
 	badgeText?: string;
-	/** Badge level shown when enabled. Ignored while `requirements` is set, which forces an error badge. Default: "success". */
-	badgeLevel?: BadgeLevel;
+	/** Badge intent shown when enabled. Ignored while `requirements` is set, which forces a "high" badge. Default: "stable". */
+	badgeIntent?: BadgeIntent;
 	className?: string;
 };
 
@@ -112,7 +113,7 @@ const CardFeature = ( {
 	onConfigure,
 	moreControls,
 	badgeText,
-	badgeLevel = 'success',
+	badgeIntent = 'stable',
 	className,
 }: CardFeatureProps ) => {
 	const instanceId = useInstanceId( CardFeature, 'newspack-card-feature' );
@@ -123,11 +124,11 @@ const CardFeature = ( {
 		'newspack-card-feature--muted': isMuted,
 	} );
 
-	let badge: { text: string; level: BadgeLevel } | undefined;
+	let badge: { text: string; intent: BadgeIntent } | undefined;
 	if ( requirements ) {
-		badge = { text: requirements, level: 'error' };
+		badge = { text: requirements, intent: 'high' };
 	} else if ( enabled ) {
-		badge = { text: badgeText ?? __( 'Enabled', 'newspack-plugin' ), level: badgeLevel };
+		badge = { text: badgeText ?? __( 'Enabled', 'newspack-plugin' ), intent: badgeIntent };
 	}
 
 	const isConfigureState = enabled && ! requirements;
@@ -203,7 +204,11 @@ const CardFeature = ( {
 							/>
 						) }
 					</Stack>
-					{ badge && <Badge id={ describedById } text={ badge.text } level={ badge.level } /> }
+					{ badge && (
+						<Badge id={ describedById } intent={ badge.intent }>
+							{ badge.text }
+						</Badge>
+					) }
 				</Stack>
 			</Card.Content>
 		</Card.Root>
