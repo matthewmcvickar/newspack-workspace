@@ -548,7 +548,7 @@ class ComponentsDemo extends Component {
 						/>
 						<ActionCard
 							badge={ __( 'It works', 'newspack-plugin' ) }
-							badgeLevel="success"
+							badgeIntent="stable"
 							title={ __( 'Example Fifteen', 'newspack-plugin' ) }
 							description={ __( 'An example of an action card with a success badge.', 'newspack-plugin' ) }
 							actionText={ __( 'Install', 'newspack-plugin' ) }
@@ -558,7 +558,7 @@ class ComponentsDemo extends Component {
 						/>
 						<ActionCard
 							badge={ __( 'Uh oh', 'newspack-plugin' ) }
-							badgeLevel="warning"
+							badgeIntent="medium"
 							title={ __( 'Example Sixteen', 'newspack-plugin' ) }
 							description={ __( 'An example of an action card with a warning badge.', 'newspack-plugin' ) }
 							actionText={ __( 'Install', 'newspack-plugin' ) }
@@ -568,7 +568,7 @@ class ComponentsDemo extends Component {
 						/>
 						<ActionCard
 							badge={ __( 'Oh no', 'newspack-plugin' ) }
-							badgeLevel="error"
+							badgeIntent="high"
 							title={ __( 'Example Seventeen', 'newspack-plugin' ) }
 							description={ __( 'An example of an action card with an error badge.', 'newspack-plugin' ) }
 							actionText={ __( 'Install', 'newspack-plugin' ) }
@@ -578,7 +578,7 @@ class ComponentsDemo extends Component {
 						/>
 						<ActionCard
 							badge={ __( 'Brand awareness', 'newspack-plugin' ) }
-							badgeLevel="brand"
+							badgeIntent="informational"
 							title={ __( 'Example Eighteen', 'newspack-plugin' ) }
 							description={ __( 'An example of an action card with a brand-colored badge.', 'newspack-plugin' ) }
 							actionText={ __( 'Install', 'newspack-plugin' ) }

@@ -6,7 +6,7 @@ export interface ActionCardProps {
 	description?: string | React.ReactNode;
 	actionText?: React.ReactNode | string | null;
 	badge?: string;
-	badgeLevel?: 'success' | 'info' | 'warning' | 'error';
+	badgeIntent?: 'high' | 'medium' | 'low' | 'stable' | 'informational' | 'draft' | 'none';
 	className?: string;
 	indent?: string;
 	notification?: string | Error | null;
