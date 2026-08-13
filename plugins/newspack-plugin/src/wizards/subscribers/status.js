@@ -14,6 +14,7 @@ export const STATUS_LABELS = {
 	cancelled: __( 'Cancelled', 'newspack-plugin' ),
 };
 
+/** @type {Record< string, import('../../../packages/components/src/types').BadgeIntent >} */
 export const STATUS_BADGE_INTENT = {
 	active: 'stable',
 	// "Pending" is queued rather than notable-but-idle, which is what separates
