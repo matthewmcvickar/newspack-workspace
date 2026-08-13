@@ -20,7 +20,7 @@ import {
 	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components';
 import { Component, Fragment, render, createInterpolateElement, createRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Icon, plus, postList, settings } from '@wordpress/icons';
 
 /**
@@ -580,7 +580,7 @@ class ComponentsDemo extends Component {
 							badge={ __( 'Brand awareness', 'newspack-plugin' ) }
 							badgeIntent="informational"
 							title={ __( 'Example Eighteen', 'newspack-plugin' ) }
-							description={ __( 'An example of an action card with a brand-colored badge.', 'newspack-plugin' ) }
+							description={ __( 'An example of an action card with an informational badge.', 'newspack-plugin' ) }
 							actionText={ __( 'Install', 'newspack-plugin' ) }
 							onClick={ () => {
 								console.log( 'Install clicked' );
@@ -1180,7 +1180,11 @@ class ComponentsDemo extends Component {
 									<CardForm
 										key={ intent }
 										title={ __( 'Example placement', 'newspack-plugin' ) }
-										description={ __( 'Badge intent: ', 'newspack-plugin' ) + intent }
+										description={ sprintf(
+											// translators: %s is a badge intent name, e.g. "stable".
+											__( 'Badge intent: %s', 'newspack-plugin' ),
+											intent
+										) }
 										badge={ { intent, text: intent.charAt( 0 ).toUpperCase() + intent.slice( 1 ) } }
 										actions={
 											<Button variant="tertiary" size="compact">

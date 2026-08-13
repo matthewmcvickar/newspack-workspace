@@ -10,7 +10,6 @@ import { Badge } from '@wordpress/ui';
 /**
  * Internal dependencies
  */
-
 import { API_BASE, STATUS_MAP, formatTimestamp } from './constants';
 
 function formatArgs( args ) {
