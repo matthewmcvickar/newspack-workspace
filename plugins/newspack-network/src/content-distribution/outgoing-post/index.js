@@ -9,7 +9,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { sprintf, __, _n } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { CheckboxControl, TextControl, Button } from '@wordpress/components';
+import { CheckboxControl, TextControl, Button, Notice } from '@wordpress/components';
 import { broadcast } from 'newspack-icons';
 import { registerPlugin } from '@wordpress/plugins';
 
@@ -18,7 +18,6 @@ import { registerPlugin } from '@wordpress/plugins';
  */
 import ContentDistributionPanel from '../content-distribution-panel';
 import PostStatus from '../../components/post-status';
-import { Notice } from 'newspack-components';
 
 const defaultStatus = newspack_network_outgoing_post.default_status;
 const networkSites = newspack_network_outgoing_post.network_sites;

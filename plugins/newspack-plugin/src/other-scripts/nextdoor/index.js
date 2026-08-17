@@ -8,7 +8,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { Button, Spinner, Panel, PanelBody, PanelHeader, Flex, FlexItem, SVG } from '@wordpress/components';
+import { Button, Notice, Spinner, Panel, PanelBody, PanelHeader, Flex, FlexItem, SVG } from '@wordpress/components';
 import { PluginSidebar } from '@wordpress/editor';
 import { registerPlugin } from '@wordpress/plugins';
 import { dateI18n, getSettings } from '@wordpress/date';
@@ -18,7 +18,6 @@ import apiFetch from '@wordpress/api-fetch';
  * Styles.
  */
 import './style.scss';
-import { Notice } from '../../../../../packages/components/src';
 
 /**
  * Possible ingestion statuses from Nextdoor.

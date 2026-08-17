@@ -16,6 +16,7 @@ import { Notice as BaseComponent } from '@wordpress/components';
  * Internal dependencies
  */
 import './style.scss';
+import { NoticeProps } from './notice.d.ts';
 
 /**
  * Flattens a node to plain text for the screen reader announcement.
@@ -43,25 +44,39 @@ const toText = node => {
 };
 
 /**
+ * Strips markup from a derived announcement so raw-HTML string children are not
+ * read out tag-by-tag.
+ *
+ * @param {string} text The derived announcement.
+ * @return {string} The announcement without tags or collapsed whitespace.
+ */
+const stripTags = text =>
+	text
+		.replace( /<[^>]+>/g, ' ' )
+		.replace( /\s+/g, ' ' )
+		.trim();
+
+const ANNOUNCED_STATUSES = [ 'error', 'success' ];
+
+/**
  * Notice.
  *
  * Wraps the core `Notice` so Newspack admin screens have a single place to change
- * when the design system's own notice is ready to adopt. Every core prop is
- * supported; see the `@wordpress/components` documentation for the full list.
+ * when the design system's own notice is ready to adopt. It supports exactly the
+ * props core reads, plus the house defaults documented on `NoticeProps`:
+ * `isDismissible` defaults to `false`, and `spokenMessage` is derived from
+ * `children` for `error` and `success` notices only — contextual `info`/`warning`
+ * content stays out of the live region, and simultaneous announcements would
+ * cancel each other anyway.
  *
- * @param {Object}  props
- * @param {*}       props.children      Notice content.
- * @param {string}  props.className     Additional class name.
- * @param {boolean} props.isDismissible Whether to render a close button. Defaults to
- *                                      `false`, unlike core, because a Newspack notice
- *                                      reports an outcome rather than queuing for removal.
- * @param {*}       props.spokenMessage Announcement text, derived from `children` when omitted.
+ * @param {NoticeProps} props Component props.
  */
-const Notice = ( { children, className, isDismissible = false, spokenMessage, ...otherProps } ) => (
+const Notice = ( { children, className, isDismissible = false, spokenMessage, status = 'info', ...otherProps } ) => (
 	<BaseComponent
 		className={ classnames( 'newspack-notice', className ) }
 		isDismissible={ isDismissible }
-		spokenMessage={ spokenMessage ?? toText( children ) }
+		spokenMessage={ spokenMessage ?? ( ANNOUNCED_STATUSES.includes( status ) ? stripTags( toText( children ) ) : '' ) }
+		status={ status }
 		{ ...otherProps }
 	>
 		{ children }

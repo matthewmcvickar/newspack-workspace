@@ -5,10 +5,9 @@
 /**
  * WordPress dependencies
  */
-import { SelectControl, TextControl } from '@wordpress/components';
+import { Notice, SelectControl, TextControl } from '@wordpress/components';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { Notice } from 'newspack-components';
 
 /**
  * Get select options from object of ad units.

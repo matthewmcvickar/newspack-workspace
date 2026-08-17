@@ -98,7 +98,7 @@ const ContextualPromptsSettings = ( { status, values, error, inFlight, onSetValu
 						onRequestClose={ () => ! inFlight && setModalOpen( false ) }
 					>
 						<VStack spacing={ 4 }>
-							<Notice status="warning" isDismissible={ false } style={ { margin: 0 } }>
+							<Notice status="warning" isDismissible={ false } className="newspack-notice--flush">
 								{ CONFIRMATION }
 							</Notice>
 							<p style={ { margin: 0 } }>{ DISCLOSURE }</p>

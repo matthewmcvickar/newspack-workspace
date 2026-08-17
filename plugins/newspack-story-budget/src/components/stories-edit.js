@@ -12,6 +12,7 @@ import {
 	PanelRow,
 	Button,
 	Icon,
+	Notice,
 } from '@wordpress/components';
 import { caution } from '@wordpress/icons';
 
@@ -19,7 +20,6 @@ import StoryFieldControl from './story-field-control';
 import { NAMESPACE as storeNamespace } from '../store/constants';
 import { getDisplayValue } from '../utils/fields';
 import { useFields, useStoryField } from '../hooks';
-import { Notice } from 'newspack-components';
 
 const EMPTY_STRING = '';
 

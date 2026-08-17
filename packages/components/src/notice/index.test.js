@@ -59,11 +59,40 @@ describe( 'Notice', () => {
 
 	it( 'announces text nested in markup', () => {
 		render(
-			<Notice status="warning">
+			<Notice status="success">
 				<span>Nested text</span>
 			</Notice>
 		);
 		expect( speak ).toHaveBeenCalledWith( 'Nested text', 'polite' );
+	} );
+
+	it( 'announces raw-HTML string content without the tags', () => {
+		render(
+			<Notice status="error" __unstableHTML>
+				{ 'Failed: <a href="https://example.com">details</a>' }
+			</Notice>
+		);
+		expect( speak ).toHaveBeenCalledWith( 'Failed: details', 'assertive' );
+	} );
+
+	it( 'does not announce contextual statuses by default', () => {
+		render(
+			<>
+				<Notice status="warning">Heads up</Notice>
+				<Notice status="info">For reference</Notice>
+				<Notice>Default status</Notice>
+			</>
+		);
+		expect( speak ).not.toHaveBeenCalled();
+	} );
+
+	it( 'silences an announced status when given an empty spokenMessage', () => {
+		render(
+			<Notice status="error" spokenMessage="">
+				Something failed
+			</Notice>
+		);
+		expect( speak ).not.toHaveBeenCalled();
 	} );
 
 	// Core serialises non-string children mid-render to build the announcement, which
@@ -78,7 +107,7 @@ describe( 'Notice', () => {
 			return (
 				<>
 					<button onClick={ () => setTick( tick + 1 ) }>Re-render</button>
-					<Notice status="warning">
+					<Notice status="error">
 						<Stateful />
 					</Notice>
 				</>
@@ -87,6 +116,8 @@ describe( 'Notice', () => {
 		render( <Harness /> );
 		expect( screen.getByText( 'Issue 1' ) ).toBeInTheDocument();
 		expect( () => fireEvent.click( screen.getByRole( 'button', { name: 'Re-render' } ) ) ).not.toThrow();
+		// A component child has no text the flattener can reach, so nothing is announced.
+		expect( speak ).not.toHaveBeenCalled();
 	} );
 
 	it( 'prefers an explicit spokenMessage', () => {
