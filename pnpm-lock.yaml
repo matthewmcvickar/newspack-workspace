@@ -470,9 +470,6 @@ importers:
 
   plugins/newspack-network:
     dependencies:
-      newspack-components:
-        specifier: workspace:*
-        version: link:../../packages/components
       newspack-icons:
         specifier: workspace:*
         version: link:../../packages/icons

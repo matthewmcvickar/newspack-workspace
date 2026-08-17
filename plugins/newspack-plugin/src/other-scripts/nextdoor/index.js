@@ -8,7 +8,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { Button, Notice, Spinner, Panel, PanelBody, PanelHeader, Flex, FlexItem, SVG } from '@wordpress/components';
+import { Button, Spinner, Notice, Panel, PanelBody, PanelHeader, Flex, FlexItem, SVG } from '@wordpress/components';
 import { PluginSidebar } from '@wordpress/editor';
 import { registerPlugin } from '@wordpress/plugins';
 import { dateI18n, getSettings } from '@wordpress/date';

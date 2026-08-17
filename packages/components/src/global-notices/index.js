@@ -10,7 +10,7 @@ import Notice from '../notice';
 
 const GlobalNotices = () => {
 	const notice = parse( window.location.search )[ 'newspack-notice' ];
-	if ( ! notice ) {
+	if ( typeof notice !== 'string' || ! notice ) {
 		return null;
 	}
 	return notice.split( ',' ).map( ( text, i ) => {

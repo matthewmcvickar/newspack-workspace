@@ -248,7 +248,7 @@ const Donation = () => {
 						/>
 						<VStack spacing={ 6 }>
 							{ 'publish' === wizardData.donation_page.status ? (
-								<Notice status="success" className="newspack-notice--flush">
+								<Notice status="success" className="newspack-notice--flush" spokenMessage="">
 									{ __( 'Your donations landing page is published.', 'newspack-plugin' ) }
 								</Notice>
 							) : (

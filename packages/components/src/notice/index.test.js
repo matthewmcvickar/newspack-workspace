@@ -66,6 +66,15 @@ describe( 'Notice', () => {
 		expect( speak ).toHaveBeenCalledWith( 'Nested text', 'polite' );
 	} );
 
+	it( 'announces zero-valued nested content', () => {
+		render(
+			<Notice status="error">
+				<span>{ 0 }</span>
+			</Notice>
+		);
+		expect( speak ).toHaveBeenCalledWith( '0', 'assertive' );
+	} );
+
 	it( 'announces raw-HTML string content without the tags', () => {
 		render(
 			<Notice status="error" __unstableHTML>

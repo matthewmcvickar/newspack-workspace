@@ -68,7 +68,9 @@ export default function AdsOnboarding( { onUpdate, onSuccess } ) {
 				{ ( ! newspack_ads_wizard.can_connect_google || false === useOAuth ) && (
 					<Fragment>
 						{ isConnected ? (
-							<Notice status="success">{ __( "We're all set here!", 'newspack-plugin' ) }</Notice>
+							<Notice status="success" spokenMessage="">
+								{ __( "We're all set here!", 'newspack-plugin' ) }
+							</Notice>
 						) : (
 							<Fragment>
 								<p>

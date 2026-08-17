@@ -44,7 +44,6 @@
 		"*.php": "npm run lint:php:staged"
 	},
 	"dependencies": {
-		"newspack-components": "workspace:*",
 		"newspack-icons": "workspace:*"
 	},
 	"devDependencies": {

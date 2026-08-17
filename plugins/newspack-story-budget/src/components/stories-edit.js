@@ -11,8 +11,8 @@ import {
 	PanelBody,
 	PanelRow,
 	Button,
-	Icon,
 	Notice,
+	Icon,
 } from '@wordpress/components';
 import { caution } from '@wordpress/icons';
 

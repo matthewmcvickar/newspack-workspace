@@ -9,16 +9,6 @@ jest.mock( '@wordpress/api-fetch', () => jest.fn() );
 jest.mock( '../../../wizard-bridge/extensions', () => ( {
 	getLocalListModalExtensions: jest.fn( () => [] ),
 } ) );
-// The root __mocks__ stub renders every newspack-components export as null, so the
-// notice needs real markup here for the assertions below to have anything to read.
-jest.mock( 'newspack-components', () => ( {
-	__esModule: true,
-	Notice: ( { children, status = 'info' } ) => (
-		<div className={ `newspack-notice components-notice is-${ status }` }>
-			<div className="components-notice__content">{ children }</div>
-		</div>
-	),
-} ) );
 
 describe( 'LocalListModal', () => {
 	beforeEach( () => {

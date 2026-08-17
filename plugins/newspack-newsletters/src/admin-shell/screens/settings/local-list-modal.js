@@ -4,6 +4,7 @@ import {
 	__experimentalVStack as VStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	Button,
 	Modal,
+	Notice,
 	SelectControl,
 	Spinner,
 	TextControl,
@@ -14,7 +15,6 @@ import { __ } from '@wordpress/i18n';
 
 import { notifyError } from '../../notices';
 import { getLocalListModalExtensions } from '../../../wizard-bridge/extensions';
-import { Notice } from 'newspack-components';
 
 const LOCAL_PATH = '/newspack-newsletters/v1/lists/local';
 const LISTS_PATH = '/newspack-newsletters/v1/lists';

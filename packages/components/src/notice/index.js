@@ -16,7 +16,6 @@ import { Notice as BaseComponent } from '@wordpress/components';
  * Internal dependencies
  */
 import './style.scss';
-import { NoticeProps } from './notice.d.ts';
 
 /**
  * Flattens a node to plain text for the screen reader announcement.
@@ -37,22 +36,23 @@ const toText = node => {
 	if ( Array.isArray( node ) ) {
 		return node.map( toText ).filter( Boolean ).join( ' ' );
 	}
-	if ( node?.props?.children ) {
+	if ( node?.props?.children !== undefined && node?.props?.children !== null ) {
 		return toText( node.props.children );
 	}
 	return '';
 };
 
 /**
- * Strips markup from a derived announcement so raw-HTML string children are not
- * read out tag-by-tag.
+ * Strips markup from a derived announcement. The live region filters markup on its
+ * own, but stripping here (with the same tag pattern it uses) keeps the derived
+ * value plain text with tidy whitespace rather than relying on that behaviour.
  *
  * @param {string} text The derived announcement.
- * @return {string} The announcement without tags or collapsed whitespace.
+ * @return {string} The announcement without tags, with collapsed whitespace.
  */
 const stripTags = text =>
 	text
-		.replace( /<[^>]+>/g, ' ' )
+		.replace( /<[^<>]+>/g, ' ' )
 		.replace( /\s+/g, ' ' )
 		.trim();
 
@@ -69,7 +69,7 @@ const ANNOUNCED_STATUSES = [ 'error', 'success' ];
  * content stays out of the live region, and simultaneous announcements would
  * cancel each other anyway.
  *
- * @param {NoticeProps} props Component props.
+ * @param {import('./notice.d').NoticeProps} props Component props.
  */
 const Notice = ( { children, className, isDismissible = false, spokenMessage, status = 'info', ...otherProps } ) => (
 	<BaseComponent

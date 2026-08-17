@@ -146,7 +146,9 @@ const Salesforce = () => {
 						{ error && <Notice status="warning">{ error }</Notice> }
 
 						{ isConnected && ! error && (
-							<Notice status="success">{ __( 'Your site is connected to Salesforce.', 'newspack-plugin' ) }</Notice>
+							<Notice status="success" spokenMessage="">
+								{ __( 'Your site is connected to Salesforce.', 'newspack-plugin' ) }
+							</Notice>
 						) }
 
 						{ __(
