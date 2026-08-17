@@ -16,7 +16,7 @@ import WizardsTab from '../../../../wizards-tab';
 import WizardSection from '../../../../wizards-section';
 import WizardsActionCard from '../../../../wizards-action-card';
 import useWizardApiFetchToggle from '../../../../hooks/use-wizard-api-fetch-toggle';
-import { Notice } from '../../../../../../../../packages/components/src';
+import { Notice } from '../../../../../../packages/components/src';
 
 const PLATFORM_OPTIONS: { label: string; value: IndesignPlatform }[] = [
 	{ label: __( 'Auto-detect (per export)', 'newspack-plugin' ), value: 'auto' },

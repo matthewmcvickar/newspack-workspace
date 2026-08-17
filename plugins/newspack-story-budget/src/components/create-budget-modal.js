@@ -62,7 +62,7 @@ const CreateBudgetModal = ( { onClose } ) => {
 				</div>
 
 				{ budgetError && (
-					<Notice status="error" onRemove={ clearErrors }>
+					<Notice status="error" isDismissible onRemove={ clearErrors }>
 						{ budgetError.message }
 					</Notice>
 				) }

@@ -16,7 +16,7 @@ import {
 	__experimentalVStack as VStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { Notice } from '../../../../../../../../../packages/components/src';
+import { Notice } from '../../../../../../../packages/components/src';
 
 type PreferencesModalProps = {
 	slug: string;

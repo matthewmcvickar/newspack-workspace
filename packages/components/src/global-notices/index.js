@@ -9,7 +9,7 @@ import { parse } from 'qs';
 import Notice from '../notice';
 
 const GlobalNotices = () => {
-	const notice = parse( window.location.search )[ 'newspack-notice' ];
+	const notice = parse( window.location.search, { ignoreQueryPrefix: true } )[ 'newspack-notice' ];
 	if ( typeof notice !== 'string' || ! notice ) {
 		return null;
 	}
