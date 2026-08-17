@@ -18,6 +18,7 @@ export { default as ColorPicker } from './color-picker';
 export { default as ConfirmDialog } from './confirm-dialog';
 export { default as CustomSelectControl } from './custom-select-control';
 export { default as DataViews } from './dataviews';
+export { default as DebugMode } from './debug-mode';
 export { default as Divider } from './divider';
 export { default as Drawer } from './drawer';
 export { default as FormTokenField } from './form-token-field';

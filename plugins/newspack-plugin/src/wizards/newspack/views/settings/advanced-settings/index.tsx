@@ -232,7 +232,7 @@ export default function AdvancedSettings() {
 					<PrivateTags data={ data } update={ setData } isFetching={ isFetching } />
 				</WizardSection>
 			) : null }
-			{ errorMessage && <Notice /> }
+			{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
 			<div className="newspack-buttons-card">
 				<Button variant="primary" onClick={ save }>
 					{ __( 'Save', 'newspack-plugin' ) }

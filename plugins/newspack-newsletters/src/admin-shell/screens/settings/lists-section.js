@@ -6,7 +6,6 @@ import {
 	Card,
 	CardBody,
 	CardHeader,
-	Notice,
 	ToggleControl,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
@@ -15,6 +14,7 @@ import { __ } from '@wordpress/i18n';
 import { notifyError } from '../../notices';
 import LocalListDeleteModal from './local-list-delete-modal';
 import LocalListModal from './local-list-modal';
+import { Notice } from 'newspack-components';
 
 export default function ListsSection( { lists, isLoading, error, canAddLocal, onPatchList, onLocalListChanged } ) {
 	// `null` = closed, `'add'` = create modal, `{ list, kind }` = edit modal pre-populated.

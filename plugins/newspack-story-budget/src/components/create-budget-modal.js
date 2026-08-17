@@ -5,13 +5,14 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { __experimentalVStack as VStack, __experimentalHStack as HStack, Button, TextControl, Notice } from '@wordpress/components';
+import { __experimentalVStack as VStack, __experimentalHStack as HStack, Button, TextControl } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
  */
 import { NAMESPACE as storeNamespace, NOTICE_CONTEXT } from '../store/constants';
+import { Notice } from 'newspack-components';
 
 const CreateBudgetModal = ( { onClose } ) => {
 	const [ budgetName, setBudgetName ] = useState( '' );

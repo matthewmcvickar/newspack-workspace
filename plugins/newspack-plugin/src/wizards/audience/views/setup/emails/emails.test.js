@@ -109,7 +109,7 @@ jest.mock( '../../../../../../packages/components/src', () => {
 			);
 		},
 		Card: ( { children } ) => <div data-testid="card">{ children }</div>,
-		Notice: ( { noticeText } ) => <div data-testid="notice">{ noticeText }</div>,
+		Notice: ( { children } ) => <div data-testid="notice">{ children }</div>,
 		utils: {
 			confirmAction: jest.fn( () => true ),
 		},

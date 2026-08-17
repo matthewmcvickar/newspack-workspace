@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { Icon, chevronUp, chevronDown, trash } from '@wordpress/icons';
-import { CheckboxControl, Notice } from '@wordpress/components';
+import { CheckboxControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,6 +10,7 @@ import { __ } from '@wordpress/i18n';
  */
 import ActionCard from '../action-card';
 import Button from '../button';
+import Notice from '../notice';
 import './style.scss';
 
 export default function SortableNewsletterListControl( { lists, selected = [], onChange = () => {} } ) {

@@ -100,7 +100,7 @@ function Webhooks() {
 						) ) }
 					</Fragment>
 				) : (
-					<Notice noticeText={ __( 'No endpoints found', 'newspack-plugin' ) } />
+					<Notice>{ __( 'No endpoints found', 'newspack-plugin' ) }</Notice>
 				) ) }
 			{ selectedEndpoint && (
 				<EndpointActionsModals

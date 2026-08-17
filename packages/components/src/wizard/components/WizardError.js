@@ -35,7 +35,9 @@ const WizardError = () => {
 		const fallbackURL = typeof newspack_urls !== 'undefined' && newspack_urls.dashboard;
 		return (
 			<Modal title={ __( 'Unrecoverable error' ) } onRequestClose={ fallbackURL ? () => ( window.location = fallbackURL ) : undefined }>
-				<Notice noticeText={ message } isError rawHTML />
+				<Notice status="error" __unstableHTML>
+					{ message }
+				</Notice>
 				{ fallbackURL && (
 					<HStack justify="flex-end" spacing={ 4 } wrap className="newspack-modal__footer">
 						<Button isPrimary href={ fallbackURL }>
@@ -47,7 +49,11 @@ const WizardError = () => {
 		);
 	}
 
-	return <Notice isError className="newspack-wizard__above-header" noticeText={ message } rawHTML />;
+	return (
+		<Notice status="error" className="newspack-wizard__above-header" __unstableHTML>
+			{ message }
+		</Notice>
+	);
 };
 
 export default WizardError;

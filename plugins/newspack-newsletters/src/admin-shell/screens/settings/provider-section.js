@@ -2,7 +2,6 @@ import {
 	Card,
 	CardBody,
 	CardHeader,
-	Notice,
 	Button,
 	SelectControl,
 	TextControl,
@@ -12,6 +11,7 @@ import { __ } from '@wordpress/i18n';
 
 import { notifyError } from '../../notices';
 import { getProviderCredentialFields } from './provider-credentials-schema';
+import { Notice } from 'newspack-components';
 
 export default function ProviderSection( {
 	provider,

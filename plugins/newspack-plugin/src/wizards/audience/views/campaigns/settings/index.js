@@ -197,7 +197,7 @@ const Settings = props => {
 		<SettingsScreen { ...props } headerActions={ headerActions }>
 			{ confirmDialog }
 			<WizardsTab>
-				{ error && <Notice isError noticeText={ error.message } /> }
+				{ error && <Notice status="error">{ error.message }</Notice> }
 				{ sectionKeys.map( ( sectionKey, index ) => {
 					const section = settings[ sectionKey ];
 					const sectionInfo = section.find( isSectionInfo );

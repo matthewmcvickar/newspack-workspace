@@ -68,7 +68,7 @@ export default withWizardScreen( ( { wizardApiFetch } ) => {
 				</>
 			}
 		>
-			{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+			{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 			<ActionCard
 				title={ __( 'Content Gate', 'newspack-plugin' ) }
 				titleLink={ config.edit_gate_url }

@@ -1,5 +1,4 @@
 import {
-	Notice,
 	Spinner,
 	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	__experimentalVStack as VStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
@@ -13,6 +12,7 @@ import OptionsSection from './options-section';
 import ProviderSection from './provider-section';
 import useListsData from './use-lists-data';
 import useSettingsData from './use-settings-data';
+import { Notice } from 'newspack-components';
 
 const LETTERHEAD_KEY = 'newspack_newsletters_letterhead_api_key';
 

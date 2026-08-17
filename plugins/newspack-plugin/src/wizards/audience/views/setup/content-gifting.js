@@ -34,7 +34,7 @@ export default function ContentGifting( { config, setConfig, updateConfig, noBor
 		>
 			{ config.content_gifting?.enabled && (
 				<>
-					{ giftingErrors.length > 0 && <Notice noticeText={ giftingErrors.join( ', ' ) } isError /> }
+					{ giftingErrors.length > 0 && <Notice status="error">{ giftingErrors.join( ', ' ) }</Notice> }
 					<Grid columns={ 2 } rowGap={ 16 }>
 						<Heading level={ 4 } style={ { gridColumn: '1 / -1' } }>
 							{ __( 'General Settings', 'newspack-plugin' ) }

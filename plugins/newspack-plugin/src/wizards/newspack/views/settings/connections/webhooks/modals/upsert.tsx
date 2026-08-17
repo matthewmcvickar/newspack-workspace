@@ -116,12 +116,14 @@ const Upsert = ( {
 					setAction( null, endpoint.id );
 				} }
 			>
-				{ errorMessage && <Notice isError noticeText={ errorMessage } /> }
-				{ true === editing.disabled && <Notice noticeText={ __( 'This webhook endpoint is currently disabled.', 'newspack-plugin' ) } /> }
-				{ editing.disabled && editing.disabled_error && (
-					<Notice isError noticeText={ __( 'Request Error: ', 'newspack-plugin' ) + editing.disabled_error } />
+				{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
+				{ true === editing.disabled && (
+					<Notice status="warning">{ __( 'This webhook endpoint is currently disabled.', 'newspack-plugin' ) }</Notice>
 				) }
-				{ testResponse.success && <Notice isSuccess noticeText={ `${ testResponse.message }: ${ testResponse.code }` } /> }
+				{ editing.disabled && editing.disabled_error && (
+					<Notice status="error">{ __( 'Request Error: ', 'newspack-plugin' ) + editing.disabled_error }</Notice>
+				) }
+				{ testResponse.success && <Notice status="success">{ `${ testResponse.message }: ${ testResponse.code }` }</Notice> }
 				<Grid columns={ 1 } gutter={ 16 } noMargin>
 					<TextControl
 						label={ __( 'URL', 'newspack-plugin' ) }

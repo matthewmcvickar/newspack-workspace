@@ -28,19 +28,15 @@ export default function Mailchimp( { value, onChange } ) {
 	const handleChange = key => val => onChange && onChange( key, val );
 	return (
 		<>
-			{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+			{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 			<SectionHeader
 				title={ __( 'Mailchimp settings', 'newspack-plugin' ) }
 				description={ __( 'Settings for the Mailchimp integration.', 'newspack-plugin' ) }
 			/>
 			{ value.audienceId === '' && (
-				<Notice
-					noticeText={ __(
-						'No Mailchimp audience selected. You will not be able to send reader activity data to Mailchimp.',
-						'newspack-plugin'
-					) }
-					isError
-				/>
+				<Notice status="error">
+					{ __( 'No Mailchimp audience selected. You will not be able to send reader activity data to Mailchimp.', 'newspack-plugin' ) }
+				</Notice>
 			) }
 			<SelectControl
 				label={ __( 'Audience ID', 'newspack-plugin' ) }

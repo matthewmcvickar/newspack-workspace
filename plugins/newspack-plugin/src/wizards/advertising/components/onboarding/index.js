@@ -68,7 +68,7 @@ export default function AdsOnboarding( { onUpdate, onSuccess } ) {
 				{ ( ! newspack_ads_wizard.can_connect_google || false === useOAuth ) && (
 					<Fragment>
 						{ isConnected ? (
-							<Notice isSuccess noticeText={ __( "We're all set here!", 'newspack-plugin' ) } />
+							<Notice status="success">{ __( "We're all set here!", 'newspack-plugin' ) }</Notice>
 						) : (
 							<Fragment>
 								<p>
@@ -97,7 +97,7 @@ export default function AdsOnboarding( { onUpdate, onSuccess } ) {
 														'newspack-plugin'
 													) }
 												</p>
-												{ fileError && <Notice noticeText={ fileError } isError /> }
+												{ fileError && <Notice status="error">{ fileError }</Notice> }
 											</>
 										),
 										actionType: 'chevron',

@@ -77,10 +77,9 @@ export const EnableModal = ( { integration, onClose, onEnable, onGoToSettings } 
 		>
 			{ hasUnsatisfiableField ? (
 				<VStack spacing={ 6 } className="newspack-integration-enable-modal__content">
-					<Notice
-						isWarning
-						noticeText={ __( 'No options are available yet. Configure this integration to complete setup.', 'newspack-plugin' ) }
-					/>
+					<Notice status="warning">
+						{ __( 'No options are available yet. Configure this integration to complete setup.', 'newspack-plugin' ) }
+					</Notice>
 					<HStack justify="flex-end" spacing={ 2 }>
 						<Button variant="tertiary" onClick={ onClose }>
 							{ __( 'Cancel', 'newspack-plugin' ) }
@@ -92,7 +91,7 @@ export const EnableModal = ( { integration, onClose, onEnable, onGoToSettings } 
 				</VStack>
 			) : (
 				<VStack spacing={ 6 } className="newspack-integration-enable-modal__content">
-					{ error && <Notice isError noticeText={ error } /> }
+					{ error && <Notice status="error">{ error }</Notice> }
 					{ missingFields.map( field => (
 						<SettingsField
 							key={ field.key }

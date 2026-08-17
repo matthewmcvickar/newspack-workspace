@@ -227,7 +227,7 @@ const Order = ( { orderId = null, defaultName = '', onPending = () => {}, onErro
 					) }
 				</p>
 			) }
-			{ error && error.data?.status !== '404' && <Notice isError noticeText={ error.message } /> }
+			{ error && error.data?.status !== '404' && <Notice status="error">{ error.message }</Notice> }
 			<TextControl
 				label={ __( 'Order name', 'newspack-ads' ) }
 				disabled={ inFlight || order?.order_name }
@@ -277,10 +277,10 @@ const Order = ( { orderId = null, defaultName = '', onPending = () => {}, onErro
 					} )
 				}
 			/>
-			{ ! inFlight && hasIssues() && <Notice isWarning noticeText={ __( "Order exists but it's misconfigured.", 'newspack-ads' ) } /> }
+			{ ! inFlight && hasIssues() && <Notice status="warning">{ __( "Order exists but it's misconfigured.", 'newspack-ads' ) }</Notice> }
 			{ step && stepName ? (
 				<Fragment>
-					<Notice isWarning noticeText={ __( 'This may take up to 15 minutes, please do not close the window.', 'newspack-ads' ) } />
+					<Notice status="warning">{ __( 'This may take up to 15 minutes, please do not close the window.', 'newspack-ads' ) }</Notice>
 					<ProgressBar completed={ step } total={ totalSteps } label={ stepName } />
 				</Fragment>
 			) : null }

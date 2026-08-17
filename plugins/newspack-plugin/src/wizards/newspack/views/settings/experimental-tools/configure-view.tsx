@@ -8,14 +8,14 @@
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import { TextareaControl, TextControl, SelectControl, ToggleControl, Spinner, Notice } from '@wordpress/components';
+import { TextareaControl, TextControl, SelectControl, ToggleControl, Spinner } from '@wordpress/components';
 import { Icon, chevronLeft, chevronDown, chevronUp } from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
  */
-import { Button } from '../../../../../../packages/components/src';
+import { Button, Notice } from '../../../../../../packages/components/src';
 import type { Tool, ToolField } from './types';
 
 interface LogEntry {

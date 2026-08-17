@@ -5,9 +5,10 @@
 /**
  * WordPress dependencies
  */
-import { Notice, SelectControl, TextControl } from '@wordpress/components';
+import { SelectControl, TextControl } from '@wordpress/components';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { Notice } from 'newspack-components';
 
 /**
  * Get select options from object of ad units.
@@ -100,7 +101,11 @@ const PlacementControl = ( {
 	}, [ providers, value.ad_unit ] );
 
 	if ( ! providers.length ) {
-		return <Notice isWarning noticeText={ __( 'There is no provider available.', 'newspack-ads' ) } isDismissible={ false } />;
+		return (
+			<Notice status="warning" isDismissible={ false }>
+				{ __( 'There is no provider available.', 'newspack-ads' ) }
+			</Notice>
+		);
 	}
 
 	return (

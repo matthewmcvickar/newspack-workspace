@@ -134,7 +134,7 @@ function CustomEvents() {
 					autoComplete="one-time-code"
 				/>
 			</Grid>
-			{ errorMessage && <Notice isError noticeText={ errorMessage } /> }
+			{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
 			<HStack justify="flex-start" spacing={ 2 }>
 				<Button variant="primary" onClick={ updateGa4Credentials } disabled={ isInputsEmpty() || !! errorMessage }>
 					{ __( 'Save', 'newspack-plugin' ) }

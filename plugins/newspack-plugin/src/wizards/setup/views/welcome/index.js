@@ -286,7 +286,7 @@ const Welcome = ( { buttonAction } ) => {
 					</p>
 
 					{ isSSL === false && (
-						<Notice isError noticeText={ __( "This site does not use HTTPS. Newspack can't be installed.", 'newspack' ) } />
+						<Notice status="error">{ __( "This site does not use HTTPS. Newspack can't be installed.", 'newspack' ) }</Notice>
 					) }
 
 					{ errors.length ? errors.map( renderErrorBox ) : null }

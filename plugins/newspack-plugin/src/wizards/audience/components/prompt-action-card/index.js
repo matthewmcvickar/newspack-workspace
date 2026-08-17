@@ -116,16 +116,17 @@ const PromptActionCard = props => {
 				>
 					{ duplicated ? (
 						<>
-							<Notice
-								isSuccess
-								noticeText={ sprintf(
+							<Notice status="success">
+								{ sprintf(
 									// Translators: %s: The title of the item.
 									__( 'Duplicate of “%s” created as a draft.', 'newspack-plugin' ),
 									title
 								) }
-							/>
+							</Notice>
 							{ ! campaignGroups && (
-								<Notice isWarning noticeText={ __( 'This prompt is currently not assigned to any campaign.', 'newspack-plugin' ) } />
+								<Notice status="warning">
+									{ __( 'This prompt is currently not assigned to any campaign.', 'newspack-plugin' ) }
+								</Notice>
 							) }
 							<HStack justify="flex-end" spacing={ 4 } wrap className="newspack-modal__footer">
 								<Button
@@ -146,7 +147,7 @@ const PromptActionCard = props => {
 					) : (
 						<>
 							{ ! campaignGroups && (
-								<Notice isWarning noticeText={ __( 'This prompt will not be assigned to any campaign.', 'newspack-plugin' ) } />
+								<Notice status="warning">{ __( 'This prompt will not be assigned to any campaign.', 'newspack-plugin' ) }</Notice>
 							) }
 							<TextControl
 								disabled={ inFlight || null === duplicateTitle }

@@ -50,7 +50,7 @@ const AudienceCampaign = withWizardScreen( ( { error, setError } ) => {
 			title={ __( 'Set Up Audience Management Campaign', 'newspack-plugin' ) }
 			description={ __( 'Preview and customize the prompts, or use our suggested defaults.', 'newspack-plugin' ) }
 		>
-			{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+			{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 			{ ! prompts && ! error && (
 				<>
 					<Waiting isLeft />

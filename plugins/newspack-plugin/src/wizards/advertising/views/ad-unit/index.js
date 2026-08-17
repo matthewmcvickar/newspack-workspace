@@ -119,10 +119,9 @@ class AdUnit extends Component {
 				</Card>
 
 				{ isInvalidSize && (
-					<Notice
-						isWarning
-						noticeText={ __( 'The ad unit must have at least one valid size or fluid size enabled.', 'newspack-plugin' ) }
-					/>
+					<Notice status="warning">
+						{ __( 'The ad unit must have at least one valid size or fluid size enabled.', 'newspack-plugin' ) }
+					</Notice>
 				) }
 
 				<Grid columns={ 4 } gutter={ 8 } className="newspack-grid__thead">

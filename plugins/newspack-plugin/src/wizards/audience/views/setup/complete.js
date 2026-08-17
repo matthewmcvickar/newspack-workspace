@@ -125,7 +125,7 @@ export default withWizardScreen( ( { fetchConfig } ) => {
 							<StepsList stepsListItems={ listItems } narrowList />
 						</Card>
 
-						{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+						{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 
 						<HStack justify="center" spacing={ 4 } wrap>
 							<Button isPrimary onClick={ () => activate() }>

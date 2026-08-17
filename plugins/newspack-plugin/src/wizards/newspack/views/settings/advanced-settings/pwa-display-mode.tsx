@@ -39,13 +39,12 @@ export default function PwaDisplayMode( { data, isFetching, update }: PwaDisplay
 					onChange={ ( pwa_display_mode: string ) => update( { pwa_display_mode } ) }
 					disabled={ isFetching }
 				/>
-				<Notice
-					noticeText={ __(
+				<Notice status="info">
+					{ __(
 						'This setting controls how your site appears when users install it as a Progressive Web App on their devices.',
 						'newspack-plugin'
 					) }
-					isInfo
-				/>
+				</Notice>
 			</Grid>
 		</Grid>
 	);

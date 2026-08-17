@@ -443,13 +443,12 @@ const Emails = () => {
 		return (
 			<Fragment>
 				<PageHeading />
-				<Notice
-					isError
-					noticeText={ __(
+				<Notice status="error">
+					{ __(
 						'Newspack uses Newspack Newsletters to handle editing email-type content. Please activate this plugin to proceed. Until this feature is configured, default receipts will be used.',
 						'newspack-plugin'
 					) }
-				/>
+				</Notice>
 				<WizardsPluginCard
 					slug="newspack-newsletters"
 					title={ __( 'Newspack Newsletters', 'newspack-plugin' ) }
@@ -467,7 +466,7 @@ const Emails = () => {
 	return (
 		<Fragment>
 			<PageHeading />
-			{ errorMessage && <Notice isError noticeText={ errorMessage } /> }
+			{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
 			{ /* Chip bar only on the Newspack platform (the only one with both
 			     groups). Settings lives in the DataViews toolbar (see `header`
 			     below), so there's nothing to render here off-platform. */ }

@@ -283,7 +283,8 @@ export default function PersonProfile() {
 	// a way back — not a Retry button that can never succeed.
 	if ( notFound ) {
 		return (
-			<Notice isError noticeText={ __( 'This subscriber could not be found. They may have been deleted.', 'newspack-plugin' ) }>
+			<Notice status="error">
+				{ __( 'This subscriber could not be found. They may have been deleted.', 'newspack-plugin' ) }
 				<Button variant="link" href={ backNav }>
 					{ __( 'Back to the list', 'newspack-plugin' ) }
 				</Button>
@@ -294,8 +295,11 @@ export default function PersonProfile() {
 	// A failed read must not read as "this person has no subscriptions".
 	if ( error || ! subscriber ) {
 		return (
-			// translators: %s is an error message.
-			<Notice isError noticeText={ sprintf( __( 'Could not load this subscriber: %s', 'newspack-plugin' ), error ) }>
+			<Notice status="error">
+				{
+					// translators: %s is an error message.
+					sprintf( __( 'Could not load this subscriber: %s', 'newspack-plugin' ), error )
+				}
 				<Button variant="link" onClick={ reload }>
 					{ __( 'Retry', 'newspack-plugin' ) }
 				</Button>

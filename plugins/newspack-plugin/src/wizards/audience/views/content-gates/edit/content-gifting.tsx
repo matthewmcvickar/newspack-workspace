@@ -147,7 +147,7 @@ const ContentGiftingSettings = () => {
 	return (
 		<div className="newspack-content-gate__edit">
 			{ confirmDialog }
-			{ giftingErrors.length > 0 && <Notice noticeText={ giftingErrors.join( ', ' ) } isError /> }
+			{ giftingErrors.length > 0 && <Notice status="error">{ giftingErrors.join( ', ' ) }</Notice> }
 			<Grid columns={ 2 } gutter={ 32 }>
 				<SectionHeader heading={ 2 } title={ __( 'General settings', 'newspack-plugin' ) } />
 				<VStack spacing={ 4 }>

@@ -124,7 +124,7 @@ const SegmentsList = ( { wizardApiFetch, segments, setSegments, isLoading } ) =>
 
 	return segments.length ? (
 		<Fragment>
-			{ error && <Notice noticeText={ error } isError /> }
+			{ error && <Notice status="error">{ error }</Notice> }
 			<Card headerActions noBorder>
 				<h2>{ __( 'Audience segments', 'newspack-plugin' ) }</h2>
 			</Card>

@@ -4,12 +4,12 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { Spinner, Notice } from '@wordpress/components';
+import { Spinner } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
-import { Badge } from '../../../../../packages/components/src';
+import { Badge, Notice } from '../../../../../packages/components/src';
 import { API_BASE, STATUS_MAP, formatTimestamp } from './constants';
 
 function formatArgs( args ) {

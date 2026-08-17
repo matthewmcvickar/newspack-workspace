@@ -240,7 +240,7 @@ const SettingsModal = ( { showModal, closeModal }: { showModal: boolean; closeMo
 			{ confirmDialog }
 			<Modal onRequestClose={ handleClose } size="medium" title={ __( 'Settings', 'newspack-plugin' ) }>
 				<p>{ __( 'Configure the sender details and reply-to address for transactional emails sent to your readers.', 'newspack-plugin' ) }</p>
-				{ errorMessage && <Notice isError noticeText={ errorMessage } /> }
+				{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
 				<VStack>
 					<TextControl
 						label={ __( 'Sender Name', 'newspack-plugin' ) }

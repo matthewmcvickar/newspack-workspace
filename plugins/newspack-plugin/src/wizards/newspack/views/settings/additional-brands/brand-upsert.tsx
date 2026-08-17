@@ -327,7 +327,7 @@ export default function Brand( {
 						onChange={ ( menuId: number ) => updateMenus( location, menuId ) }
 					/>
 				) ) }
-			{ errorMessage && <Notice isError>{ errorMessage }</Notice> }
+			{ errorMessage && <Notice status="error">{ errorMessage }</Notice> }
 			{ /* Action Buttons */ }
 			<div className="newspack-buttons-card">
 				<Button disabled={ ! isBrandValid } variant="primary" onClick={ () => upsertBrand( Number( brandId ), brand ) }>

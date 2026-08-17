@@ -164,7 +164,7 @@ export default function AccessibilityStatement( { isFetching }: AccessibilitySta
 				) }
 			</Card>
 
-			<Notice isSuccess={ statusInfo.type === 'success' } isWarning={ statusInfo.type === 'warning' } noticeText={ statusInfo.message } />
+			<Notice status={ statusInfo.type }>{ statusInfo.message }</Notice>
 
 			<p>
 				{ __(

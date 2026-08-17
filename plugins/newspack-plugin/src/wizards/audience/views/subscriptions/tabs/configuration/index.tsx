@@ -49,7 +49,7 @@ function Configuration() {
 				<Card>
 					<h2>{ __( 'Subscription Upgrade Link', 'newspack-plugin' ) }</h2>
 					{ primaryProduct && (
-						<Notice isDismissible={ false }>
+						<Notice>
 							{ __( 'Share the following URL to trigger the subscription upgrade:', 'newspack-plugin' ) }{ ' ' }
 							<a href={ window.newspackAudienceSubscriptions.upgrade_subscription_url } target="_blank" rel="noreferrer noopener">
 								{ window.newspackAudienceSubscriptions.upgrade_subscription_url }

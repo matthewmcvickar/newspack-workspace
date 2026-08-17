@@ -6,7 +6,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { CheckboxControl, Notice, SelectControl } from '@wordpress/components';
+import { CheckboxControl, SelectControl } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 
 /**
@@ -16,6 +16,7 @@ import WizardsTab from '../../../../wizards-tab';
 import WizardSection from '../../../../wizards-section';
 import WizardsActionCard from '../../../../wizards-action-card';
 import useWizardApiFetchToggle from '../../../../hooks/use-wizard-api-fetch-toggle';
+import { Notice } from '../../../../../../../../packages/components/src';
 
 const PLATFORM_OPTIONS: { label: string; value: IndesignPlatform }[] = [
 	{ label: __( 'Auto-detect (per export)', 'newspack-plugin' ), value: 'auto' },

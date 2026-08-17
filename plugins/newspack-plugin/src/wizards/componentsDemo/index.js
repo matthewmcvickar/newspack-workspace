@@ -42,6 +42,7 @@ import {
 	Handoff,
 	ImageUpload,
 	Modal,
+	DebugMode,
 	Notice,
 	Page,
 	PluginInstaller,
@@ -160,7 +161,7 @@ class ComponentsDemo extends Component {
 
 		return (
 			<Fragment>
-				{ newspack_aux_data.is_debug_mode && <Notice debugMode /> }
+				{ newspack_aux_data.is_debug_mode && <DebugMode /> }
 				<Page
 					breadcrumbItems={ [ { label: __( 'Components Demo', 'newspack-plugin' ) } ] }
 					subTitle={ __( 'Simple components used for composing the UI of Newspack', 'newspack-plugin' ) }
@@ -385,14 +386,6 @@ class ComponentsDemo extends Component {
 								</Drawer.Content>
 								<Drawer.Footer>{ this.drawerActions( drawerActionCount ) }</Drawer.Footer>
 							</Drawer.Root>
-						</Card>
-						<Card>
-							<h2>{ __( 'Notice', 'newspack-plugin' ) }</h2>
-							<Notice noticeText={ __( 'This is an info notice.', 'newspack-plugin' ) } />
-							<Notice noticeText={ __( 'This is an error notice.', 'newspack-plugin' ) } isError />
-							<Notice noticeText={ __( 'This is a help notice.', 'newspack-plugin' ) } isHelp />
-							<Notice noticeText={ __( 'This is a success notice.', 'newspack-plugin' ) } isSuccess />
-							<Notice noticeText={ __( 'This is a warning notice.', 'newspack-plugin' ) } isWarning />
 						</Card>
 						<Card>
 							<h2>{ __( 'Plugin installer', 'newspack-plugin' ) }</h2>
@@ -710,8 +703,8 @@ class ComponentsDemo extends Component {
 									] }
 									onChange={ selectValues => this.setState( { selectValues } ) }
 								/>
-								<Notice
-									noticeText={
+								<Notice>
+									{
 										<>
 											{ __( 'Selected:', 'newspack-plugin' ) }{ ' ' }
 											{ this.state.selectValues.length > 0
@@ -719,7 +712,7 @@ class ComponentsDemo extends Component {
 												: __( 'none', 'newspack-plugin' ) }
 										</>
 									}
-								/>
+								</Notice>
 							</Grid>
 						</Card>
 						<Card>

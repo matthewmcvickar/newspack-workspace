@@ -83,7 +83,10 @@ describe( 'Metering free views count', () => {
 	it( 'warns that a count of 0 is the same as turning metering off', () => {
 		render( <MeteringHarness initialMetering={ { enabled: true, count: 0, period: 'month' } } /> );
 
-		expect( screen.getByText( /the same behavior as turning Metering off/ ) ).toBeInTheDocument();
+		// The notice also announces itself, so the same text sits in the live region.
+		expect(
+			screen.getByText( /the same behavior as turning Metering off/, { ignore: 'script, style, .a11y-speak-region' } )
+		).toBeInTheDocument();
 	} );
 
 	it( 'treats a blanked field as 0', () => {

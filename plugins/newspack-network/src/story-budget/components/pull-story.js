@@ -7,7 +7,6 @@ import {
 	__experimentalVStack as VStack,
 	__experimentalHeading as Heading,
 	SelectControl,
-	Notice,
 	Button,
 } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
@@ -19,6 +18,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import LocalBudgetsControl from './local-budgets-control';
+import { Notice } from 'newspack-components';
 
 export default function PullStory( { items, closeModal, onActionPerformed } ) {
 	const isBulk = items.length > 1;

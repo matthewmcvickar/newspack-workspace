@@ -28,19 +28,15 @@ export default function ActiveCampaign( { value, onChange } ) {
 	const handleChange = key => val => onChange && onChange( key, val );
 	return (
 		<>
-			{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+			{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 			<SectionHeader
 				title={ __( 'ActiveCampaign settings', 'newspack-plugin' ) }
 				description={ __( 'Settings for the ActiveCampaign integration.', 'newspack-plugin' ) }
 			/>
 			{ value.masterList === '' && (
-				<Notice
-					noticeText={ __(
-						'No Master List selected. You will not be able to send reader activity data to ActiveCampaign.',
-						'newspack-plugin'
-					) }
-					isError
-				/>
+				<Notice status="error">
+					{ __( 'No Master List selected. You will not be able to send reader activity data to ActiveCampaign.', 'newspack-plugin' ) }
+				</Notice>
 			) }
 			<SelectControl
 				label={ __( 'Master List', 'newspack-plugin' ) }

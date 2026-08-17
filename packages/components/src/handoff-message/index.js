@@ -7,7 +7,8 @@ import { useEffect, useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import { HANDOFF_KEY } from '../consts';
-import { Notice } from '../';
+import Notice from '../notice';
+import './style.scss';
 
 /**
  * Handoff Message Component.
@@ -34,5 +35,9 @@ export default function HandoffMessage() {
 	if ( ! handoffMessage ) {
 		return null;
 	}
-	return <Notice isHandoff isDismissible={ false } rawHTML noticeText={ handoffMessage } />;
+	return (
+		<Notice className="newspack-handoff-message" status="warning" __unstableHTML>
+			{ handoffMessage }
+		</Notice>
+	);
 }

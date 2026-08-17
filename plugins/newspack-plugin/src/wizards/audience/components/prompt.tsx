@@ -293,8 +293,8 @@ export default function Prompt( { inFlight, prompt, setInFlight, setPrompts }: P
 								) }
 							</Fragment>
 						) ) }
-						{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
-						{ success && <Notice noticeText={ success } isSuccess /> }
+						{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
+						{ success && <Notice status="success">{ success }</Notice> }
 						<div className="newspack-buttons-card">
 							<Button
 								isPrimary

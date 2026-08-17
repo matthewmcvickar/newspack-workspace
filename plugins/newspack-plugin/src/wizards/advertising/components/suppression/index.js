@@ -73,7 +73,7 @@ const Suppression = () => {
 			title={ __( 'Suppression settings', 'newspack-plugin' ) }
 			description={ __( 'Configure where ads are suppressed.', 'newspack-plugin' ) }
 		>
-			{ error && <Notice isError noticeText={ error.message } /> }
+			{ error && <Notice status="error">{ error.message }</Notice> }
 			<SectionHeader
 				title={ __( 'Post types', 'newspack-plugin' ) }
 				heading={ 3 }

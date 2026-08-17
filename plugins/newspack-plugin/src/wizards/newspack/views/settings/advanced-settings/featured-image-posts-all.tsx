@@ -7,12 +7,10 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { Notice } from '@wordpress/components';
-
 /**
  * Internal dependencies
  */
-import { Grid, SelectControl } from '../../../../../../packages/components/src';
+import { Grid, Notice, SelectControl } from '../../../../../../packages/components/src';
 
 export default function FeaturedImagePostsAll( { data, update, postCount }: ThemeModComponentProps< AdvancedSettings > & { postCount: string } ) {
 	return (

@@ -10,7 +10,6 @@ import {
 	Icon,
 	Spinner,
 	Button,
-	Notice,
 } from '@wordpress/components';
 import { notAllowed } from '@wordpress/icons';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -23,6 +22,7 @@ import utils from '../utils';
 import { NAMESPACE as storeNamespace } from '../store/constants';
 import StoryFieldPanel from './story-field-panel';
 import { useFields, useStory } from '../hooks';
+import { Notice } from 'newspack-components';
 
 export default ( { storyId, onCancel } ) => {
 	const { isLoadingStory, canEditStory, storyError } = useSelect( select => ( {

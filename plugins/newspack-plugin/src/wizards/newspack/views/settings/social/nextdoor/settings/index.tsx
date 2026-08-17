@@ -67,17 +67,18 @@ export const Settings = ( { settings, status, error, updateSettings, disconnect,
 	if ( ! status.is_connected ) {
 		return (
 			<Card>
-				<Notice
-					noticeText={ __( 'Nextdoor is not connected. Please complete the setup process first.', 'newspack-plugin' ) }
-					isError={ false }
-				/>
+				<Notice status="warning">{ __( 'Nextdoor is not connected. Please complete the setup process first.', 'newspack-plugin' ) }</Notice>
 			</Card>
 		);
 	}
 
 	return (
 		<>
-			{ error && <Notice noticeText={ error } isError onClose={ () => setError( null ) } /> }
+			{ error && (
+				<Notice status="error" isDismissible onRemove={ () => setError( null ) }>
+					{ error }
+				</Notice>
+			) }
 			<Card>
 				<CardHeader>
 					<Heading level={ 4 }>{ __( 'Connection Information', 'newspack-plugin' ) }</Heading>

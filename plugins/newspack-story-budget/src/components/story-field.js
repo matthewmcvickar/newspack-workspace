@@ -4,7 +4,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
-import { __experimentalVStack as VStack, __experimentalHStack as HStack, Dropdown, Button, Notice, Tooltip } from '@wordpress/components';
+import { __experimentalVStack as VStack, __experimentalHStack as HStack, Dropdown, Button, Tooltip } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useMemo } from '@wordpress/element';
@@ -16,6 +16,7 @@ import { NAMESPACE as storeNamespace } from '../store/constants';
 import StoryFieldControl from './story-field-control';
 import utils from '../utils';
 import { useStory, useStoryField } from '../hooks';
+import { Notice } from 'newspack-components';
 
 const DEFAULT_POPOVER_PROPS = {
 	placement: 'right-start',

@@ -12,15 +12,7 @@ import { applyFilters } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState, useMemo, useCallback } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews/wp';
-import {
-	__experimentalHStack as HStack,
-	__experimentalVStack as VStack,
-	Button,
-	Modal,
-	Notice,
-	ProgressBar,
-	ToggleControl,
-} from '@wordpress/components';
+import { __experimentalHStack as HStack, __experimentalVStack as VStack, Button, Modal, ProgressBar, ToggleControl } from '@wordpress/components';
 import { update } from '@wordpress/icons';
 
 /**
@@ -29,6 +21,7 @@ import { update } from '@wordpress/icons';
 import utils from '../utils';
 import { NAMESPACE as storeNamespace } from '../store/constants';
 import { useStoryFields, useStoryActions, useView } from '../hooks';
+import { Notice } from 'newspack-components';
 
 export default () => {
 	const { stories, isLoading, isRefreshing, progress, errors, canManage, canRefreshStories } = useSelect( select => ( {

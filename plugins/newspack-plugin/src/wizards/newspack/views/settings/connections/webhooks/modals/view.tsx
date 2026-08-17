@@ -76,7 +76,7 @@ const View = ( { endpoint, setAction }: { endpoint: ModalComponentProps[ 'endpoi
 					) ) }
 				</table>
 			) : (
-				<Notice noticeText={ __( "This endpoint hasn't received any requests yet.", 'newspack-plugin' ) } />
+				<Notice>{ __( "This endpoint hasn't received any requests yet.", 'newspack-plugin' ) }</Notice>
 			) }
 		</Modal>
 	);

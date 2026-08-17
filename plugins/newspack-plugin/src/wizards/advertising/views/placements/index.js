@@ -166,7 +166,7 @@ const Placements = () => {
 
 	return (
 		<Fragment>
-			{ ! inFlight && ! providers.length && <Notice isWarning noticeText={ __( 'There is no provider available.', 'newspack-plugin' ) } /> }
+			{ ! inFlight && ! providers.length && <Notice status="warning">{ __( 'There is no provider available.', 'newspack-plugin' ) }</Notice> }
 			<Grid columns={ 12 } noMargin gutter={ 0 }>
 				<h2 className="newspack-wizard__heading" style={ { gridColumn: 'span 4' } }>
 					{ __( 'Placements', 'newspack-plugin' ) }
@@ -254,8 +254,8 @@ const Placements = () => {
 								} ) }
 							>
 								<VStack spacing={ 4 }>
-									{ error && <Notice isError noticeText={ error.message } /> }
-									{ biddersError && <Notice isWarning noticeText={ biddersError.message } /> }
+									{ error && <Notice status="error">{ error.message }</Notice> }
+									{ biddersError && <Notice status="warning">{ biddersError.message }</Notice> }
 									{ ( enabled || isEnabling ) && placement.hook_name && (
 										<PlacementControl
 											providers={ providers }

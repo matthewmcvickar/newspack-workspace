@@ -16,12 +16,12 @@ import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { filterSortAndPaginate } from '@wordpress/dataviews';
 import type { Action, Field, View } from '@wordpress/dataviews';
-import { Spinner, Notice, Button } from '@wordpress/components';
+import { Spinner, Button } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
-import { DataViews, Badge, Router } from '../../../../../packages/components/src';
+import { Badge, DataViews, Notice, Router } from '../../../../../packages/components/src';
 import { WIZARD_STORE_NAMESPACE } from '../../../../../packages/components/src/wizard/store';
 import { PolicyChips, EffectivePrice } from './policy-cells';
 

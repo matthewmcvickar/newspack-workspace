@@ -2,7 +2,7 @@
  * WordPress dependencies.
  */
 import apiFetch from '@wordpress/api-fetch';
-import { BaseControl, Button, DateTimePicker, Modal, Notice, Popover, SelectControl, TextareaControl } from '@wordpress/components';
+import { BaseControl, Button, DateTimePicker, Modal, Popover, SelectControl, TextareaControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
@@ -16,6 +16,7 @@ import { registerPlugin } from '@wordpress/plugins';
  */
 import './style.scss';
 import moment from 'moment';
+import { Notice } from '../../../../../packages/components/src';
 
 /**
  * Correction types.

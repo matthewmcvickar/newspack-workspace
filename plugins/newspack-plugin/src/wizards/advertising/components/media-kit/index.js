@@ -9,12 +9,10 @@
  */
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Notice } from '@wordpress/components';
-
 /**
  * Internal dependencies
  */
-import { ActionCard } from '../../../../../packages/components/src';
+import { ActionCard, Notice } from '../../../../../packages/components/src';
 import { useState } from 'react';
 
 const MediaKitToggle = () => {

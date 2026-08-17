@@ -74,7 +74,7 @@ const ServiceAccountConnection = ( { updateWithAPI, isConnected } ) => {
 										'newspack'
 									) }
 								</p>
-								{ fileError && <Notice noticeText={ fileError } isError /> }
+								{ fileError && <Notice status="error">{ fileError }</Notice> }
 							</>
 						),
 						actionType: 'chevron',

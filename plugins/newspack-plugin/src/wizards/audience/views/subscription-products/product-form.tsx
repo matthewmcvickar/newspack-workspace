@@ -19,7 +19,6 @@ import {
 	SelectControl,
 	CheckboxControl,
 	FormTokenField,
-	Notice,
 	Flex,
 	FlexBlock,
 	FlexItem,
@@ -30,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { Badge, Grid, SectionHeader, Divider, useUnsavedChangesDialog } from '../../../../../packages/components/src';
+import { Badge, Divider, Grid, Notice, SectionHeader, useUnsavedChangesDialog } from '../../../../../packages/components/src';
 import { WIZARD_STORE_NAMESPACE } from '../../../../../packages/components/src/wizard/store';
 import { PolicyChips, EffectivePrice } from './policy-cells';
 

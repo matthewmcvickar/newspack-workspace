@@ -14,7 +14,6 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
-	Notice,
 	TextControl,
 	TextareaControl,
 	ToggleControl,
@@ -28,7 +27,7 @@ import { megaphone } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import { Button, Divider, Grid, Modal, SectionHeader } from '../../../../../../packages/components/src';
+import { Button, Divider, Grid, Modal, Notice, SectionHeader } from '../../../../../../packages/components/src';
 import WizardsTab from '../../../../wizards-tab';
 
 const DISCLOSURE = __(

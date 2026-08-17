@@ -85,10 +85,10 @@ const JetpackSSO = () => {
 			>
 				{ settings.force_2fa && (
 					<>
-						{ error && <Notice isError noticeText={ error } /> }
+						{ error && <Notice status="error">{ error }</Notice> }
 						{ settings.jetpack_sso_force_2fa && (
 							<>
-								<Notice isWarning>
+								<Notice status="warning">
 									{ __(
 										'Two-factor authentication is currently enforced for all users via Jetpack configuration.',
 										'newspack-plugin'

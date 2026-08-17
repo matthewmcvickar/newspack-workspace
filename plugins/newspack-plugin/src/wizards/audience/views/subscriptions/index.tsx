@@ -62,7 +62,7 @@ function AudienceSubscriptions( _props: Record< string, unknown >, ref: React.Fo
 					breadcrumbs: [ { label: __( 'Audience Management', 'newspack-plugin' ) }, { label: __( 'Subscriptions', 'newspack-plugin' ) } ],
 					render: () => (
 						<WizardsTab title={ __( 'Subscriptions', 'newspack-plugin' ) }>
-							<Notice isWarning>{ __( 'No Subscriptions screens are available on this site.', 'newspack-plugin' ) }</Notice>
+							<Notice status="warning">{ __( 'No Subscriptions screens are available on this site.', 'newspack-plugin' ) }</Notice>
 						</WizardsTab>
 					),
 				},

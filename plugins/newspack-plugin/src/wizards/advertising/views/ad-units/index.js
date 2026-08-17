@@ -133,27 +133,22 @@ const AdUnits = ( { adUnits, parentAdUnits, onDelete, wizardApiFetch, updateWith
 				</>
 			) }
 			{ missingParentAdUnit && (
-				<Notice
-					noticeText={ __(
-						'The current parent ad unit is inactive or archived. Please select a different parent ad unit.',
-						'newspack-plugin'
-					) }
-					isError
-				/>
+				<Notice status="error">
+					{ __( 'The current parent ad unit is inactive or archived. Please select a different parent ad unit.', 'newspack-plugin' ) }
+				</Notice>
 			) }
 			{ false === serviceData.status?.is_network_code_matched && (
-				<Notice
-					noticeText={ __(
+				<Notice status="warning">
+					{ __(
 						'Your GAM network code is different than the network code the site was configured with. Legacy ad units are likely to not load.',
 						'newspack-plugin'
 					) }
-					isWarning
-				/>
+				</Notice>
 			) }
-			{ gamErrorMessage && <Notice noticeText={ gamErrorMessage } isError /> }
+			{ gamErrorMessage && <Notice status="error">{ gamErrorMessage }</Notice> }
 			{ serviceData.created_targeting_keys?.length > 0 && (
-				<Notice
-					noticeText={ [
+				<Notice status="success">
+					{ [
 						__( 'Created custom targeting keys:', 'newspack-plugin' ) + '\u00A0',
 						serviceData.created_targeting_keys.join( ', ' ) + '. \u00A0',
 						<ExternalLink
@@ -163,12 +158,11 @@ const AdUnits = ( { adUnits, parentAdUnits, onDelete, wizardApiFetch, updateWith
 							{ __( 'Visit your GAM dashboard', 'newspack-plugin' ) }
 						</ExternalLink>,
 					] }
-					isSuccess
-				/>
+				</Notice>
 			) }
 			{ isLegacy && serviceData.enabled && (
 				<>
-					<Notice noticeText={ __( 'Currently operating in legacy mode.', 'newspack-plugin' ) } isWarning />
+					<Notice status="warning">{ __( 'Currently operating in legacy mode.', 'newspack-plugin' ) }</Notice>
 					<HStack alignment="bottom" justify="flex-start" spacing={ 4 }>
 						<TextControl
 							label={ __( 'Network Code', 'newspack-plugin' ) }

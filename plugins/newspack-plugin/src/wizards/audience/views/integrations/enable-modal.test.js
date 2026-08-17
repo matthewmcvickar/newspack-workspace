@@ -84,7 +84,8 @@ describe( 'EnableModal', () => {
 		fireEvent.change( screen.getByLabelText( /Mailchimp Audience/ ), { target: { value: 'abc123' } } );
 		fireEvent.click( screen.getByRole( 'button', { name: 'Enable' } ) );
 		await waitFor( () => expect( screen.getByRole( 'button', { name: 'Enable' } ).disabled ).toBe( false ) );
-		expect( screen.getByText( 'Something went wrong. Please try again.' ) ).toBeTruthy();
+		// The notice also announces itself, so the same text sits in the live region.
+		expect( screen.getByText( 'Something went wrong. Please try again.', { ignore: 'script, style, .a11y-speak-region' } ) ).toBeTruthy();
 	} );
 
 	it( 'offers the settings view when a required select has no selectable options', () => {

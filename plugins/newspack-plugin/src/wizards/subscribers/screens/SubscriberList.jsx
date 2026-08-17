@@ -343,7 +343,8 @@ export default function SubscriberList() {
 	// offer a retry.
 	if ( error ) {
 		return (
-			<Notice isError noticeText={ sprintf( __( 'Could not load subscribers: %s', 'newspack-plugin' ), error ) }>
+			<Notice status="error">
+				{ sprintf( __( 'Could not load subscribers: %s', 'newspack-plugin' ), error ) }
 				<Button variant="link" onClick={ reload }>
 					{ __( 'Retry', 'newspack-plugin' ) }
 				</Button>

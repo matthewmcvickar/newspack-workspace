@@ -143,10 +143,10 @@ const Salesforce = () => {
 				title={ __( 'Salesforce Settings', 'newspack-plugin' ) }
 				description={ () => (
 					<>
-						{ error && <Notice noticeText={ error } isWarning /> }
+						{ error && <Notice status="warning">{ error }</Notice> }
 
 						{ isConnected && ! error && (
-							<Notice noticeText={ __( 'Your site is connected to Salesforce.', 'newspack-plugin' ) } isSuccess />
+							<Notice status="success">{ __( 'Your site is connected to Salesforce.', 'newspack-plugin' ) }</Notice>
 						) }
 
 						{ __(

@@ -127,13 +127,12 @@ const PlatformSelection = ( { onComplete, onCancel, config, saveConfig, inFlight
 					/>
 					{ installFailed && (
 						<>
-							<Notice
-								isWarning
-								noticeText={ __(
+							<Notice status="warning">
+								{ __(
 									'Some plugins could not be installed automatically. Install them manually using the links above, or continue and finish setup later.',
 									'newspack-plugin'
 								) }
-							/>
+							</Notice>
 							<div className="newspack-buttons-card">
 								<Button isPrimary onClick={ onComplete }>
 									{ __( 'Continue', 'newspack-plugin' ) }

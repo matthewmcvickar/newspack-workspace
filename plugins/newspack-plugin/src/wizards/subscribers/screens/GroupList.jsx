@@ -242,7 +242,8 @@ export default function GroupList() {
 	// a retry.
 	if ( error ) {
 		return (
-			<Notice isError noticeText={ sprintf( __( 'Could not load %1$s: %2$s', 'newspack-plugin' ), GROUP_LABEL_PLURAL, error ) }>
+			<Notice status="error">
+				{ sprintf( __( 'Could not load %1$s: %2$s', 'newspack-plugin' ), GROUP_LABEL_PLURAL, error ) }
 				<Button variant="link" onClick={ reload }>
 					{ __( 'Retry', 'newspack-plugin' ) }
 				</Button>

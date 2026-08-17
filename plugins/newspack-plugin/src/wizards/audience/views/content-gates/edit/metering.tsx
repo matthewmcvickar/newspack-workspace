@@ -35,13 +35,12 @@ export default function Metering( { description, metering, onChange }: MeteringP
 			{ metering.enabled && (
 				<>
 					{ metering.enabled && isCountZero && (
-						<Notice
-							isWarning
-							noticeText={ __(
+						<Notice status="warning">
+							{ __(
 								'Free views is set to 0, so no reader gets a free view and content is gated for everyone — the same behavior as turning Metering off. Set 1 or more free views to meter access.',
 								'newspack-plugin'
 							) }
-						/>
+						</Notice>
 					) }
 					<NumberControl
 						label={ __( 'Free views', 'newspack-plugin' ) }

@@ -6,12 +6,12 @@
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { Notice, __experimentalHStack as HStack } from '@wordpress/components'; // eslint-disable-line @wordpress/no-unsafe-wp-apis
+import { __experimentalHStack as HStack } from '@wordpress/components'; // eslint-disable-line @wordpress/no-unsafe-wp-apis
 
 /**
  * Internal dependencies
  */
-import { Button, Modal } from '../../../../../../packages/components/src';
+import { Button, Modal, Notice } from '../../../../../../packages/components/src';
 import type { Tool } from './types';
 
 export default function EnableModal( {

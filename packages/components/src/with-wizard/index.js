@@ -81,7 +81,11 @@ export default function withWizard( WrappedComponent, requiredPlugins ) {
 		 */
 		getErrorNotice = error => {
 			const { message } = error;
-			return <Notice isError className="newspack-wizard__above-header" noticeText={ message } rawHTML />;
+			return (
+				<Notice status="error" className="newspack-wizard__above-header" __unstableHTML>
+					{ message }
+				</Notice>
+			);
 		};
 
 		/**
@@ -98,7 +102,9 @@ export default function withWizard( WrappedComponent, requiredPlugins ) {
 			const { message } = error;
 			return (
 				<Modal title={ __( 'Unrecoverable error' ) } onRequestClose={ () => ( window.location = fallbackURL ) }>
-					<Notice noticeText={ message } isError rawHTML />
+					<Notice status="error" __unstableHTML>
+						{ message }
+					</Notice>
 					<HStack justify="flex-end" spacing={ 4 } wrap className="newspack-modal__footer">
 						<Button isPrimary href={ fallbackURL }>
 							{ __( 'Return to Dashboard', 'newspack-plugin' ) }

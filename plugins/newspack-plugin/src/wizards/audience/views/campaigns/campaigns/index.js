@@ -5,7 +5,7 @@
 /**
  * WordPress dependencies.
  */
-import { Notice, __experimentalHStack as HStack, __experimentalVStack as VStack } from '@wordpress/components'; // eslint-disable-line @wordpress/no-unsafe-wp-apis
+import { __experimentalHStack as HStack, __experimentalVStack as VStack } from '@wordpress/components'; // eslint-disable-line @wordpress/no-unsafe-wp-apis
 import { useContext, useEffect, useState, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { ENTER } from '@wordpress/keycodes';
@@ -14,7 +14,7 @@ import { moreVertical } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import { Button, Card, CustomSelectControl, Modal, Router, TextControl, withWizardScreen } from '../../../../../../packages/components/src';
+import { Button, Card, CustomSelectControl, Modal, Notice, Router, TextControl, withWizardScreen } from '../../../../../../packages/components/src';
 import CampaignManagementPopover from '../../../components/campaign-management-popover';
 import SegmentGroup from '../../../components/segment-group';
 import { dataForCampaignId, isAboveHeader } from '../utils';

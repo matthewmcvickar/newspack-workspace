@@ -39,7 +39,7 @@ export default function Settings( { title, value, onChange } ) {
 	const handleChange = key => val => onChange && onChange( key, val );
 	return (
 		<>
-			{ error && <Notice noticeText={ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) } isError /> }
+			{ error && <Notice status="error">{ error?.message || __( 'Something went wrong.', 'newspack-plugin' ) }</Notice> }
 			<SectionHeader
 				title={ sprintf( /** Translators: %s is the email service provider title */ __( '%s settings', 'newspack-plugin' ), title ) }
 				description={ sprintf(
@@ -48,15 +48,14 @@ export default function Settings( { title, value, onChange } ) {
 				) }
 			/>
 			{ value.masterList === '' && (
-				<Notice
-					noticeText={ sprintf(
+				<Notice status="error">
+					{ sprintf(
 						// Translators: 1 is the term used to refer to lists for a given email service provider and 2 is the email service provider title
 						__( 'No %1$s selected. You will not be able to send reader activity data to %2$s.', 'newspack-plugin' ),
 						listsLabel,
 						title
 					) }
-					isError
-				/>
+				</Notice>
 			) }
 			<SelectControl
 				label={ listsLabel }

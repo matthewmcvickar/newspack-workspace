@@ -97,7 +97,7 @@ When building a screen, use the **spacing scale** (8px unit: 16, 24, 32, 48, 64)
 ### Content Components
 
 - **`ActionCard`** – Use when one concept (e.g. a feature or setting) can be toggled on/off and may have extra content below. Internal padding (24px default; 16px/8px for isMedium/isSmall) and 24px between regions keep hierarchy clear; expandable content uses 24px top padding and 24px between siblings.
-- **`Notice`** – Use for outcome feedback (success/error/warning) or short contextual messages. Vertical margin is 32px so notices don’t collide with cards; keep one primary message per area when possible.
+- **`Notice`** – Use for outcome feedback or short contextual messages. A thin wrapper around the `@wordpress/components` `Notice`, so it takes every core prop: content is `children`, the variant is `status` (`error`, `warning`, `success`, `info`), and `actions` renders buttons or links. Two house defaults differ from core: it is not dismissible unless you pass `isDismissible` with an `onRemove`, and its announcement is derived from `children` without serialising them. Vertical margin is 32px so notices don’t collide with cards; keep one primary message per area when possible.
 - **`Waiting`** – Loading state indicator.
 - **`ProgressBar`** – Progress indicator.
 - **`Accordion`** / **`AccordionPanel`** – Container for one or more collapsible panels.
@@ -135,6 +135,8 @@ When building a screen, use the **spacing scale** (8px unit: 16, 24, 32, 48, 64)
 - **`NewspackIcon`** - Newspack icon wrapper component
 - **`InfoButton`** - Info button with tooltip
 - **`GlobalNotices`** - Global notice system component
+- **`HandoffMessage`** - Sticky banner shown on return from a handed-off plugin screen
+- **`DebugMode`** - Fixed badge marking a site running in debug mode
 
 ### Settings Components
 
@@ -271,7 +273,7 @@ import {
 export default withWizardScreen( ( { config, updateConfig } ) => {
 	return (
 		<>
-			<Notice noticeText={ __( 'Audience Management is enabled.', 'newspack-plugin' ) } isSuccess />
+			<Notice status="success">{ __( 'Audience Management is enabled.', 'newspack-plugin' ) }</Notice>
 			<Card noBorder>
 				<ActionCard
 					title={ __( 'Present newsletter signup after checkout', 'newspack-plugin' ) }
@@ -521,7 +523,7 @@ When Newspack components don't provide what you need, use these WordPress compon
 ### Feedback and overlays
 
 - **`Spinner`** – Loading spinner
-- **`Notice`** – Inline notice (success/error/warning); prefer Newspack `Notice` in wizards when it fits
+- **`Notice`** – Inline notice. Newspack's `Notice` wraps this one, so the props are the same. Use Newspack's on admin screens, and import this one directly in the block editor, where pulling `newspack-components` into an editor bundle is not worth a notice
 - **`Placeholder`** – Empty state in blocks
 - **`Modal`** – Modal dialog
 - **`Popover`** – Popover (e.g. webhooks endpoint actions, corrections modal)
@@ -672,7 +674,7 @@ Components rely on WordPress design system states where applicable; a few Newspa
 - **ActionCard (clickable)** – Hover: `box-shadow: 0 4px 8px rgba(black, 0.08)`; transition 125ms ease-in-out. Use for cards that navigate or open.
 - **Button** – Primary, secondary, disabled, and link variants follow `@wordpress/components` Button; focus and hover come from WordPress base styles.
 - **Toggle (inside ActionCard)** – Checked/unchecked and focus states from WordPress ToggleControl; label is visually hidden but available for accessibility.
-- **Notice** – Success (green), error (red), warning (yellow), info (gray) variants; use for feedback only and one primary message per area when possible.
+- **Notice** – `success`, `error`, `warning` and `info` statuses, each rendered by core with its own accent; use for feedback only and one primary message per area when possible.
 
 When adding new interactive components, preserve focus visibility and use the same state patterns (hover shadow, transition) so the UI feels consistent.
 

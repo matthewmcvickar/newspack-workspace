@@ -10,13 +10,13 @@ import apiFetch from '@wordpress/api-fetch';
 import {
 	Modal,
 	Button,
-	Notice,
 	ToggleControl,
 	RadioControl,
 	__experimentalHStack as HStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 	__experimentalVStack as VStack, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { Notice } from '../../../../../../../../../packages/components/src';
 
 type PreferencesModalProps = {
 	slug: string;

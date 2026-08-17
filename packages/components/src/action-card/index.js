@@ -245,10 +245,22 @@ const ActionCard = ( {
 			</div>
 			{ notification && (
 				<div className="newspack-action-card__notification newspack-action-card__region-children">
-					{ 'error' === notificationLevel && <Notice noticeText={ notification } isError rawHTML={ notificationHTML } /> }
-					{ 'info' === notificationLevel && <Notice noticeText={ notification } rawHTML={ notificationHTML } /> }
-					{ 'success' === notificationLevel && <Notice noticeText={ notification } isSuccess rawHTML={ notificationHTML } /> }
-					{ 'warning' === notificationLevel && <Notice noticeText={ notification } isWarning rawHTML={ notificationHTML } /> }
+					{ 'error' === notificationLevel && (
+						<Notice status="error" __unstableHTML={ notificationHTML }>
+							{ notification }
+						</Notice>
+					) }
+					{ 'info' === notificationLevel && <Notice __unstableHTML={ notificationHTML }>{ notification }</Notice> }
+					{ 'success' === notificationLevel && (
+						<Notice status="success" __unstableHTML={ notificationHTML }>
+							{ notification }
+						</Notice>
+					) }
+					{ 'warning' === notificationLevel && (
+						<Notice status="warning" __unstableHTML={ notificationHTML }>
+							{ notification }
+						</Notice>
+					) }
 				</div>
 			) }
 			{ children && ( ( expandable && expanded ) || ! expandable ) ? (

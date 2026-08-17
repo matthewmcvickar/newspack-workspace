@@ -11,7 +11,6 @@ import {
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
-	Notice as CoreNotice,
 	ToggleControl,
 	ExternalLink,
 } from '@wordpress/components';
@@ -104,7 +103,7 @@ export const DonationAmounts = ( { hideHeader = false }: { hideHeader?: boolean 
 				</ToggleGroupControl>
 			) }
 			{ Array.isArray( trashed ) && 0 < trashed.length && (
-				<Notice isError>
+				<Notice status="error">
 					{
 						<span
 							dangerouslySetInnerHTML={ {
@@ -205,11 +204,8 @@ const Donation = () => {
 		<WizardsTab>
 			{ /* Display product validation issues */ }
 			{ hasInvalidProducts ? (
-				<Notice
-					isWarning
-					noticeText={ __( 'Some donation products are invalid. Please correct the following issues:', 'newspack-plugin' ) }
-					style={ { marginBottom: '16px' } }
-				>
+				<Notice status="warning" className="newspack-notice--spaced-bottom">
+					{ __( 'Some donation products are invalid. Please correct the following issues:', 'newspack-plugin' ) }
 					<ul style={ { marginTop: '8px', marginBottom: '0' } }>
 						{ validationResults.map( ( product: ProductValidation ) => {
 							if ( product.issues && product.issues.length > 0 ) {
@@ -252,13 +248,13 @@ const Donation = () => {
 						/>
 						<VStack spacing={ 6 }>
 							{ 'publish' === wizardData.donation_page.status ? (
-								<CoreNotice status="success" isDismissible={ false } style={ { margin: 0 } }>
+								<Notice status="success" className="newspack-notice--flush">
 									{ __( 'Your donations landing page is published.', 'newspack-plugin' ) }
-								</CoreNotice>
+								</Notice>
 							) : (
-								<CoreNotice status="warning" isDismissible={ false } style={ { margin: 0 } }>
+								<Notice status="warning" className="newspack-notice--flush">
 									{ __( 'Your donations landing page is not yet published.', 'newspack-plugin' ) }
-								</CoreNotice>
+								</Notice>
 							) }
 							<div>
 								<Button
