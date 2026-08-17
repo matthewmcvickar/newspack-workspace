@@ -7,8 +7,8 @@ import {
 	__experimentalVStack as VStack,
 	__experimentalHeading as Heading,
 	SelectControl,
-	Button,
 	Notice,
+	Button,
 } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
 import { useState, useRef, useEffect } from '@wordpress/element';

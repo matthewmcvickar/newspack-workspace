@@ -103,7 +103,17 @@ export const DonationAmounts = ( { hideHeader = false }: { hideHeader?: boolean 
 				</ToggleGroupControl>
 			) }
 			{ Array.isArray( trashed ) && 0 < trashed.length && (
-				<Notice status="error">
+				<Notice
+					status="error"
+					spokenMessage={ sprintf(
+						// Translators: %s is a comma-separated list of trashed product names.
+						__(
+							'One or more donation products is in trash. Please restore the product(s) to continue using donation features: %s',
+							'newspack-plugin'
+						),
+						trashed.join( ', ' )
+					) }
+				>
 					{
 						<span
 							dangerouslySetInnerHTML={ {
