@@ -63,11 +63,10 @@ const ANNOUNCED_STATUSES = [ 'error', 'success' ];
  *
  * Wraps the core `Notice` so Newspack admin screens have a single place to change
  * when the design system's own notice is ready to adopt. It supports exactly the
- * props core reads, plus the house defaults documented on `NoticeProps`:
- * `isDismissible` defaults to `false`, and `spokenMessage` is derived from
- * `children` for `error` and `success` notices only — contextual `info`/`warning`
- * content stays out of the live region, and simultaneous announcements would
- * cancel each other anyway.
+ * props core reads, with two house defaults documented on `NoticeProps`:
+ * not dismissible, and announced only for `error`/`success` statuses, because
+ * contextual content does not belong in the live region and simultaneous
+ * announcements cancel each other.
  *
  * @param {import('./notice.d').NoticeProps} props Component props.
  */
