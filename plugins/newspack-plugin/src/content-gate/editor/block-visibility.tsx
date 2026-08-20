@@ -3,6 +3,7 @@
  */
 import { addFilter } from '@wordpress/hooks';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { useSelect } from '@wordpress/data';
 import { InspectorControls } from '@wordpress/block-editor';
 import {
 	FormTokenField,
@@ -17,8 +18,7 @@ import {
 } from '@wordpress/components';
 import type { TokenItem } from '@wordpress/components/build-types/form-token-field/types.d.ts';
 import { useState, useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -27,11 +27,16 @@ import './block-visibility.scss';
 import {
 	formatAccessRuleOptionLabel,
 	getAccessRuleOptionTokens,
+	getAccessRuleTokenFieldMessages,
 	getMissingOptionLabel,
+	getUnlistedAccessRuleValuesNotice,
+	hasUnlistedAccessRuleValues,
 	isAccessRuleOptionInput,
 	resolveAccessRuleOptionTokens,
 	MAX_OPTION_SUGGESTIONS,
 } from '../access-rule-options';
+import { getAccessRuleOptionSource } from '../access-rule-option-sources';
+import OneTimePurchaseRuleControl from '../components/one-time-purchase-rule-control';
 
 /**
  * Target block types that receive access control attributes.
@@ -140,32 +145,21 @@ const GateControls = ( { gateIds, onChange }: { gateIds: number[]; onChange: ( i
 				suggestions={ gateOptions.map( formatAccessRuleOptionLabel ) }
 				maxSuggestions={ MAX_OPTION_SUGGESTIONS }
 				onChange={ ( tokens: ( string | TokenItem )[] ) =>
+					// The attribute is typed as integers, and a preserved value may come
+					// back as the string the token carried, so coerce before storing.
 					onChange( resolveAccessRuleOptionTokens( tokens, gateOptions, gateIds ).map( Number ) )
 				}
+				messages={ getAccessRuleTokenFieldMessages(
+					__( 'Not a selectable gate. Pick one from the list, or type its ID.', 'newspack-plugin' )
+				) }
 				__experimentalValidateInput={ ( input: string ) => isAccessRuleOptionInput( input, gateOptions ) }
+				__experimentalAutoSelectFirstMatch
 				__experimentalExpandOnFocus
 				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 			/>
 		</PanelRow>
 	);
-};
-
-/**
- * Rules whose options must be fetched dynamically.
- *
- * `per_page=-1` is apiFetch's unbounded form — fetchAllMiddleware walks the `Link:
- * rel="next"` headers and resolves to every page merged. A fixed page size silently
- * truncated the list, leaving the institutions past it unselectable. The value is
- * apiFetch's, not the REST API's: the posts controller caps `per_page` at 100 and would
- * reject -1 outright, so this only works through apiFetch. `orderby`/`status` match
- * `Institution::get_options()`, which seeds these options before the fetch lands.
- */
-const DYNAMIC_OPTION_RULES: Record< string, { path: string; mapItem: ( item: DynamicOptionItem ) => AccessRuleOption } > = {
-	institution: {
-		path: '/wp/v2/np_institution?per_page=-1&context=edit&status=publish&orderby=title&order=asc&_fields=id,title',
-		mapItem: ( item: DynamicOptionItem ) => ( { value: item.id, label: item.title.raw } ),
-	},
 };
 
 /**
@@ -183,41 +177,53 @@ const AccessRuleValueControl = ( {
 	value: ActiveRule[ 'value' ];
 	onChange: ( value: ActiveRule[ 'value' ] ) => void;
 } ) => {
-	const dynamicConfig = DYNAMIC_OPTION_RULES[ slug ];
 	const staticOptions: AccessRuleOption[] = config.options ?? [];
 
 	const [ options, setOptions ] = useState< AccessRuleOption[] >( staticOptions );
 
 	useEffect( () => {
-		if ( ! dynamicConfig ) {
+		const source = getAccessRuleOptionSource( slug );
+		if ( ! source ) {
 			return;
 		}
 		let cancelled = false;
-		apiFetch< DynamicOptionItem[] >( { path: dynamicConfig.path } )
-			.then( items => {
+		source()
+			.then( fetched => {
 				if ( ! cancelled ) {
-					setOptions( items.map( dynamicConfig.mapItem ) );
+					setOptions( fetched );
 				}
 			} )
 			.catch( () => {} );
 		return () => {
 			cancelled = true;
 		};
-	}, [ slug ] ); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [ slug ] );
+
+	if ( 'one_time_purchase' === slug ) {
+		return <OneTimePurchaseRuleControl value={ value } onChange={ onChange } options={ options } productsLabel={ config.name } />;
+	}
 
 	if ( options.length > 0 ) {
+		const selected = Array.isArray( value ) ? value : [];
 		return (
-			<FormTokenField
-				label={ config.name }
-				value={ getAccessRuleOptionTokens( options, value, getMissingOptionLabel( slug ) ) }
-				suggestions={ options.map( formatAccessRuleOptionLabel ) }
-				maxSuggestions={ MAX_OPTION_SUGGESTIONS }
-				onChange={ ( tokens: ( string | TokenItem )[] ) => onChange( resolveAccessRuleOptionTokens( tokens, options, value ) ) }
-				__experimentalValidateInput={ ( input: string ) => isAccessRuleOptionInput( input, options ) }
-				__experimentalExpandOnFocus
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
-			/>
+			<>
+				<FormTokenField
+					label={ config.name }
+					value={ getAccessRuleOptionTokens( options, selected, getMissingOptionLabel( slug ) ) }
+					suggestions={ options.map( formatAccessRuleOptionLabel ) }
+					maxSuggestions={ MAX_OPTION_SUGGESTIONS }
+					onChange={ ( tokens: ( string | TokenItem )[] ) => onChange( resolveAccessRuleOptionTokens( tokens, options, selected ) ) }
+					messages={ getAccessRuleTokenFieldMessages() }
+					__experimentalValidateInput={ ( input: string ) => isAccessRuleOptionInput( input, options ) }
+					__experimentalAutoSelectFirstMatch
+					__experimentalExpandOnFocus
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
+				/>
+				{ hasUnlistedAccessRuleValues( options, selected ) && (
+					<p className="newspack-access-control-block-visibility-panel__notice">{ getUnlistedAccessRuleValuesNotice() }</p>
+				) }
+			</>
 		);
 	}
 
@@ -328,7 +334,12 @@ const BlockVisibilityPanel = ( { attributes, setAttributes }: BlockEditProps ) =
 		const newRules: BlockVisibilityRules = { ...rules, ...updates };
 		const stillActive = hasActiveRules( newRules, mode, gateIds );
 		setAttributes( {
-			newspackAccessControlRules: newRules,
+			// Reset to the registered default when the last rule is turned off, rather
+			// than storing every rule set to inactive. Gutenberg omits an attribute that
+			// deep-equals its default, so the block stops carrying any access-control
+			// markup at all - which is what tells the rest of the plugin that this block
+			// no longer has rules on it.
+			newspackAccessControlRules: stillActive ? newRules : {},
 			// Reset visibility to 'visible' when all custom rules are cleared.
 			...( ! stillActive ? { newspackAccessControlVisibility: 'visible' } : {} ),
 		} );
@@ -403,11 +414,11 @@ const BlockVisibilityPanel = ( { attributes, setAttributes }: BlockEditProps ) =
 
 				<VisibilityControl
 					label={ __( 'Visibility', 'newspack-plugin' ) }
-					help={ sprintf(
-						// translators: %s is either 'gates' or 'rules'.
-						__( 'Content visibility for readers who match any of the selected %s.', 'newspack-plugin' ),
-						mode === 'gate' ? __( 'gates', 'newspack-plugin' ) : __( 'rules', 'newspack-plugin' )
-					) }
+					help={
+						'gate' === mode
+							? __( 'Content visibility for readers who match any of the selected gates.', 'newspack-plugin' )
+							: __( 'Content visibility for readers who match any of the selected rules.', 'newspack-plugin' )
+					}
 					value={ visibility }
 					onChange={ ( v: string ) => setAttributes( { newspackAccessControlVisibility: v } ) }
 					disabled={ ! rulesActive }
@@ -425,7 +436,16 @@ addFilter(
 	'newspack-plugin/block-visibility/inspector',
 	createHigherOrderComponent( BlockEdit => {
 		const WithBlockVisibilityPanel = ( props: BlockEditProps ) => {
-			if ( ! TARGET_BLOCKS.includes( props.name ) ) {
+			// Access rules are post context. A pattern's own editor — including the
+			// post editor's focus mode — is editing a design, not a post, so there is
+			// nothing for the rules to resolve against.
+			const isPatternEditor = useSelect(
+				select =>
+					'wp_block' ===
+					( select( 'core/editor' ) as { getCurrentPostType?: () => string | undefined } | undefined )?.getCurrentPostType?.(),
+				[]
+			);
+			if ( isPatternEditor || ! TARGET_BLOCKS.includes( props.name ) ) {
 				return <BlockEdit { ...props } />;
 			}
 			return (

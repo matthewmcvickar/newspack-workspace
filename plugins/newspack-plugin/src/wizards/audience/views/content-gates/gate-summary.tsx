@@ -6,7 +6,7 @@
 /**
  * WordPress dependencies.
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -17,11 +17,75 @@ import {
 	formatAccessRuleOptionLabel,
 	formatMissingAccessRuleOptionLabel,
 	getMissingOptionLabel,
+	type AccessRuleOption,
 } from '../../../../content-gate/access-rule-options';
+import { normalizeOneTimePurchaseValue } from '../../../../content-gate/components/one-time-purchase-rule-control';
 
 const availableAccessRules = window.newspackAudienceContentGates.available_access_rules || {};
 
 const noOp = () => {};
+
+/**
+ * Name each stored value alongside the ID it stores — the same identification the
+ * pickers give, so a gate reads the same way wherever it is inspected. Names repeat
+ * across product and institution tiers, and a value the option list cannot describe is
+ * named rather than printed bare.
+ */
+const formatAccessRuleOptionValues = ( values: Array< string | number >, options: AccessRuleOption[] = [], slug: string ) =>
+	values
+		.map( value => {
+			const option = findAccessRuleOption( options, value );
+			return option ? formatAccessRuleOptionLabel( option ) : formatMissingAccessRuleOptionLabel( value, getMissingOptionLabel( slug ) );
+		} )
+		.join( ', ' );
+
+/**
+ * Human-readable summary for an access rule value.
+ */
+const formatAccessRuleValue = ( rule: GateAccessRule ): string => {
+	const config = availableAccessRules[ rule.slug ];
+	if ( 'one_time_purchase' === rule.slug ) {
+		const { product_ids: productIds, duration_value: durationValue, duration_unit: durationUnit } = normalizeOneTimePurchaseValue( rule.value );
+		const products = formatAccessRuleOptionValues( productIds, config?.options, rule.slug );
+		if ( 'forever' === durationUnit ) {
+			return sprintf(
+				// translators: %s: list of product names.
+				__( '%s (forever)', 'newspack-plugin' ),
+				products
+			);
+		}
+		if ( 'days' === durationUnit ) {
+			return sprintf(
+				// translators: 1: list of product names, 2: number of days.
+				_n( '%1$s (%2$d day from purchase)', '%1$s (%2$d days from purchase)', durationValue, 'newspack-plugin' ),
+				products,
+				durationValue
+			);
+		}
+		if ( 'months' === durationUnit ) {
+			return sprintf(
+				// translators: 1: list of product names, 2: number of months.
+				_n( '%1$s (%2$d month from purchase)', '%1$s (%2$d months from purchase)', durationValue, 'newspack-plugin' ),
+				products,
+				durationValue
+			);
+		}
+		return sprintf(
+			// translators: %s: list of product names. Shown when the stored duration is unrecognized; the rule then never grants access.
+			__( '%s (invalid duration, grants no access)', 'newspack-plugin' ),
+			products
+		);
+	}
+	if ( Array.isArray( rule.value ) && config?.options ) {
+		return formatAccessRuleOptionValues( rule.value, config.options, rule.slug );
+	}
+	// Boolean rules carry no displayable value (mirrors the pre-formatter
+	// rendering, where React printed nothing for a boolean child).
+	if ( 'boolean' === typeof rule.value ) {
+		return '';
+	}
+	return String( rule.value );
+};
 
 export type GateSummarySection = {
 	key: string;
@@ -99,17 +163,7 @@ export const getGateSummarySections = ( gate: Gate, isNewsletter = false ): Gate
 						ruleGroup.map( rule =>
 							availableAccessRules[ rule.slug ]?.name ? (
 								<p key={ `${ groupIndex }-${ rule.slug }` }>
-									<strong>{ availableAccessRules[ rule.slug ].name }:</strong>{ ' ' }
-									{ Array.isArray( rule.value ) && availableAccessRules[ rule.slug ]?.options
-										? rule.value
-												.map( value => {
-													const option = findAccessRuleOption( availableAccessRules[ rule.slug ].options ?? [], value );
-													return option
-														? formatAccessRuleOptionLabel( option )
-														: formatMissingAccessRuleOptionLabel( value, getMissingOptionLabel( rule.slug ) );
-												} )
-												.join( ', ' )
-										: rule.value }
+									<strong>{ availableAccessRules[ rule.slug ].name }:</strong> { formatAccessRuleValue( rule ) }
 								</p>
 							) : null
 						)
